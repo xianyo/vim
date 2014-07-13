@@ -96,18 +96,7 @@ clone到本地,配置到linux个人目录
         :BundleInstall!    update
         :BundleClean       remove plugin not in list
 
-2. ####多语言语法检查 [scrooloose/syntastic](https://github.com/scrooloose/syntastic)
-
-    建议安装，静态语法及风格检查,支持多种语言
-
-    修改了下标记一列的背景色,原有的背景色在solarized下太难看了…..
-
-    演示
-
-    ![syntastic](https://github.com/wklken/gallery/blob/master/vim/syntastic.png?raw=true)
-
-
-3. ####代码自动补全 [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+2. ####代码自动补全 [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 
     必装，强烈推荐(YCM是我目前用到的最好的自动补全插件)
 
@@ -130,7 +119,7 @@ clone到本地,配置到linux个人目录
         ,gd  跳到声明位置, 仅 filetypes: c, cpp, objc, objcpp, python 有效
 
 
-4. ####代码片段快速插入 [SirVer/ultisnips](https://github.com/SirVer/ultisnips) +[honza/vim-snippets](https://github.com/honza/vim-snippets)
+3. ####代码片段快速插入 [SirVer/ultisnips](https://github.com/SirVer/ultisnips) +[honza/vim-snippets](https://github.com/honza/vim-snippets)
 
 
     必装，效率杀手锏，快速插入自定义的代码片段
@@ -143,157 +132,57 @@ clone到本地,配置到linux个人目录
 
     ![ultisnips](https://github.com/wklken/gallery/blob/master/vim/utilsnips.gif?raw=true)
 
+4. ####Tagbar [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
 
-5. ####引号配对补全 [Raimondi/delimitMate](https://github.com/Raimondi/delimitMate)
 
-    必装，输入引号,括号时,自动补全
-
-    对python的docstring 三引号做了处理(只处理""", '''暂时没配，可以自己加)
+         [sd] <F4> 打开
 
     演示
 
-    ![delimitmate](https://github.com/wklken/gallery/blob/master/vim/delimate.gif?raw=true)
-
-    附:同类插件 [kana/vim-smartinput](https://github.com/kana/vim-smartinput)
+    ![tagbar](https://github.com/wklken/gallery/blob/master/vim/tagbar.gif?raw=true)
 
 
-6. ####html/xml标签配对补全 [docunext/closetag.vim](https://github.com/docunext/closetag.vim)
+5. ####Markdown [plasticboy/vim-markdown](https://github.com/plasticboy/vim-markdown)
 
+    markdown语法,编辑md文件
 
-7. ####快速注释 [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-
-    必装，另一个大大提升效率的地方，快速批量加减注释
-
-        [d] shift+v+方向键选中(默认当前行)
-            ->  ,cc  加上注释
-            -> ,cu 解开注释
+    
+6. ####状态栏增强 [bling/vim-airline](https://github.com/bling/vim-airline)
 
     演示
 
-    ![nerdcommenter](https://github.com/wklken/gallery/blob/master/vim/nerdcomment.gif?raw=true)
+    ![airline](https://raw.githubusercontent.com/wiki/bling/vim-airline/screenshots/demo.gif)
 
+7. ####vim-bufferline [bling/vim-bufferline](https://github.com/bling/vim-bufferline)
 
-    附:注释还有其他两种插件可选[tcomment](https://github.com/tomtom/tcomment_vim) 和[tpope/vim-commentary](https://github.com/tpope/vim-commentary)
+    状态栏显示buffer
 
+    演示
+    
+    in the statusline
 
-8. ####快速编辑 [tpope/vim-surround](https://github.com/tpope/vim-surround) +[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
+    ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-status.png?raw=true)
 
-    必装，很给力的功能，快速给词加环绕符号,例如引号
+    or the command bar
 
-    repeat进行增强,'.'可以重复命令
+    ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-command.png?raw=true)
 
-        [d]
-        cs"' [inside]
-        "Hello world!" -> 'Hello world!'
-        ds"
-        "Hello world!" -> Hello world!
-        ysiw"
-        Hello -> "Hello"
+8. ####vimcdoc [asins/vimcdoc](https://github.com/asins/vimcdoc)
+
+    vim中文帮助文档
+    
+9. ####多语言语法检查 [scrooloose/syntastic](https://github.com/scrooloose/syntastic)
+
+    建议安装，静态语法及风格检查,支持多种语言
+
+    修改了下标记一列的背景色,原有的背景色在solarized下太难看了…..
 
     演示
 
-    ![surround](https://github.com/wklken/gallery/blob/master/vim/surround.gif?raw=true)
+    ![syntastic](https://github.com/wklken/gallery/blob/master/vim/syntastic.png?raw=true)
 
-
-9. ####去行尾空格 [bronson/vim-trailing-whitespace](https://github.com/bronson/vim-trailing-whitespace)
-
-    将代码行最后无效的空格标红
-
-        [sd] ,空格    去掉当前行末尾空格
-
-10. ####赋值语句代码对齐 [godlygeek/tabular](https://github.com/godlygeek/tabular)
-
-    将代码,或者json等,进行对齐,具体见 [tabular-vim](http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
-
-        [sd]  可以选中多行,不选中默认操作当前行
-            ,a= 对齐等号表达式
-            ,a: 对齐冒号表达式(json/map等)
-
-11. ####位置跳转[Lokaltog/vim-easymotion](https://github.com/Lokaltog/vim-easymotion)
-
-    必装，效率提升杀手锏，跳转到光标后任意位置
-
-    配置(我的leader键配置 let g:mapleader = ',')
-
-        ,, + w  跳转
-        ,, + fe  查找'e',快速跳转定位到某个字符位置
-
-    演示
-
-    ![easy_motion](https://github.com/wklken/gallery/blob/master/vim/easymotion.gif?raw=true)
-
-12. ####符号匹配跳转[vim-scripts/matchit.zip](https://github.com/vim-scripts/matchit.zip)
-
-    选装
-
-    % 匹配成对的标签，跳转
-
-13. ####mark跳转 [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)
-
-
-14. ####区块伸缩 [terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
-
-    视图模式下可伸缩选中部分，用于快速选中某些块
-
-        [sd]
-        + 增加选中范围(+/=按键)
-        _ 减少选中范围(_/-按键)
-
-    演示（直接取链到其github图)
-
-    ![expand-region](https://raw.github.com/terryma/vim-expand-region/master/expand-region.gif)
-
-
-15. ####多光标选中编辑 [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
-
-    多光标批量操作
-
-        [sd]
-        ctrl + m 开始选择
-        ctrl + p 向上取消
-        ctrl + x 跳过
-        esc   退出
-
-    演示(官方演示图)
-
-    ![multiple-cursors](https://raw.github.com/terryma/vim-multiple-cursors/master/assets/example1.gif)
-
-
-16. 自定义文本对象 [kana/vim-textobj-user.git](https://github.com/kana/vim-textobj-user.git)
-
-   后面几个扩展对象的依赖
-
-   更多其他扩展,建 [wiki](https://github.com/kana/vim-textobj-user/wiki)
-
-   PS: 特希望有一个扩展支持 '' "" [] {} ()
-
-17. 行文本对象 [kana/vim-textobj-line](https://github.com/kana/vim-textobj-line)
-
-   增加文本对象: l
-
-        dal
-        yal
-        cil
-
-18. 缩进文本对象 [kana/vim-textobj-indent.git](https://github.com/kana/vim-textobj-indent.git)
-
-   增加文本对象: i
-
-   相同缩进属于同一块,对python很有用
-
-        dai
-        yai
-        cii
-
-19. 文件文本对象 [kana/vim-textobj-entire.git](https://github.com/kana/vim-textobj-entire.git)
-
-   增加文本对象: e
-
-        dae
-        yae
-        cie
-
-20. ####搜索 [kien/ctrlp.vim](https://github.com/kien/ctrlp.vim)
+    
+10. ####搜索 [kien/ctrlp.vim](https://github.com/kien/ctrlp.vim)
 
     文件搜索,ack/Command-T需要依赖于外部包,不喜欢有太多依赖的,除非十分强大, 具体 [文档](http://kien.github.io/ctrlp.vim/)
 
@@ -317,60 +206,7 @@ clone到本地,配置到linux个人目录
         ,fU   搜索光标下单词对应函数
 
 
-
-21. ####git 常用操作 [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
-
-    git插件, 编辑文件时进行一些diff操作,例如diff
-
-    不是很习惯,所以用的次数太少,目前和现有配置快捷键有冲突,尚未解决
-
-        [sd]
-        ,ge   = git diff edit[gd被ycm占用了]
-
-    没有配置其他快捷键,可以参照github,自己增加修改映射
-
-22. ####git状态 [airblade/vim-gitgutter](https://github.com/airblade/vim-gitgutter)
-
-    git,在同一个文件内,通过标记和高亮,显示本次文件变更点
-
-        [sd]
-        ,gs   = show diff status [gd被ycm占用了]
-
-    ![gitgutter](https://raw.githubusercontent.com/airblade/vim-gitgutter/master/screenshot.png)
-
-23. ####文件时光机 [sjl/gundo.vim](https://github.com/sjl/gundo.vim)
-
-    编辑文件时光机
-
-        [sd] ,h  查看文件编辑历史
-
-    附:同类插件 [mbbill/undotree](https://github.com/mbbill/undotree)
-
-
-24. ####状态栏增强 [bling/vim-airline](https://github.com/bling/vim-airline)
-
-    演示
-
-    ![airline](https://raw.githubusercontent.com/wiki/bling/vim-airline/screenshots/demo.gif)
-
-25. ####括号上色高亮 [kien/rainbow_parentheses.vim](https://github.com/kien/rainbow_parentheses.vim)
-
-    演示
-
-    ![rainbow](https://github.com/wklken/gallery/blob/master/vim/rainbow_parentheses.png?raw=true)
-
-
-26. ####[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-
-   经典主题
-   ![solarized](https://github.com/wklken/gallery/blob/master/vim/solarized.png?raw=true)
-
-27. ####[tomasr/molokai](https://github.com/tomasr/molokai)
-
-   用sublime text2的同学应该很熟悉, 另一个主题,可选,偶尔换换味道
-   ![molokai](https://github.com/wklken/gallery/blob/master/vim/molokai.png?raw=true)	
-
-28. ####目录树 [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
+11. ####目录树 [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
 
     必装,开启目录树导航
 
@@ -399,8 +235,202 @@ clone到本地,配置到linux个人目录
     演示
 
     ![thenerdtree](https://github.com/wklken/gallery/blob/master/vim/thenerdtree.gif?raw=true)
+    
+12. ####快速注释 [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 
-29. ####Buffer [fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim)
+    必装，另一个大大提升效率的地方，快速批量加减注释
+
+        [d] shift+v+方向键选中(默认当前行)
+            ->  ,cc  加上注释
+            -> ,cu 解开注释
+
+    演示
+
+    ![nerdcommenter](https://github.com/wklken/gallery/blob/master/vim/nerdcomment.gif?raw=true)
+
+
+    附:注释还有其他两种插件可选[tcomment](https://github.com/tomtom/tcomment_vim) 和[tpope/vim-commentary](https://github.com/tpope/vim-commentary)
+
+13. ####区块伸缩 [terryma/vim-expand-region](https://github.com/terryma/vim-expand-region)
+
+    视图模式下可伸缩选中部分，用于快速选中某些块
+
+        [sd]
+        + 增加选中范围(+/=按键)
+        _ 减少选中范围(_/-按键)
+
+    演示（直接取链到其github图)
+
+    ![expand-region](https://raw.github.com/terryma/vim-expand-region/master/expand-region.gif)
+
+
+14. ####多光标选中编辑 [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+
+    多光标批量操作
+
+        [sd]
+        ctrl + m 开始选择
+        ctrl + p 向上取消
+        ctrl + x 跳过
+        esc   退出
+
+    演示(官方演示图)
+
+    ![multiple-cursors](https://raw.github.com/terryma/vim-multiple-cursors/master/assets/example1.gif)
+15. ####git 常用操作 [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+
+    git插件, 编辑文件时进行一些diff操作,例如diff
+
+    不是很习惯,所以用的次数太少,目前和现有配置快捷键有冲突,尚未解决
+
+        [sd]
+        ,ge   = git diff edit[gd被ycm占用了]
+
+    没有配置其他快捷键,可以参照github,自己增加修改映射
+
+16. ####git状态 [airblade/vim-gitgutter](https://github.com/airblade/vim-gitgutter)
+
+    git,在同一个文件内,通过标记和高亮,显示本次文件变更点
+
+        [sd]
+        ,gs   = show diff status [gd被ycm占用了]
+
+    ![gitgutter](https://raw.githubusercontent.com/airblade/vim-gitgutter/master/screenshot.png)
+    
+17. ####位置跳转[Lokaltog/vim-easymotion](https://github.com/Lokaltog/vim-easymotion)
+
+    必装，效率提升杀手锏，跳转到光标后任意位置
+
+    配置(我的leader键配置 let g:mapleader = ',')
+
+        ,, + w  跳转
+        ,, + fe  查找'e',快速跳转定位到某个字符位置
+
+    演示
+
+    ![easy_motion](https://github.com/wklken/gallery/blob/master/vim/easymotion.gif?raw=true)
+
+    
+18. ####引号配对补全 [Raimondi/delimitMate](https://github.com/Raimondi/delimitMate)
+
+    必装，输入引号,括号时,自动补全
+
+    对python的docstring 三引号做了处理(只处理""", '''暂时没配，可以自己加)
+
+    演示
+
+    ![delimitmate](https://github.com/wklken/gallery/blob/master/vim/delimate.gif?raw=true)
+
+    附:同类插件 [kana/vim-smartinput](https://github.com/kana/vim-smartinput)
+
+
+19. ####html/xml标签配对补全 [docunext/closetag.vim](https://github.com/docunext/closetag.vim)
+
+
+20. ####快速编辑 [tpope/vim-surround](https://github.com/tpope/vim-surround) +[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
+
+    必装，很给力的功能，快速给词加环绕符号,例如引号
+
+    repeat进行增强,'.'可以重复命令
+
+        [d]
+        cs"' [inside]
+        "Hello world!" -> 'Hello world!'
+        ds"
+        "Hello world!" -> Hello world!
+        ysiw"
+        Hello -> "Hello"
+
+    演示
+
+    ![surround](https://github.com/wklken/gallery/blob/master/vim/surround.gif?raw=true)
+
+
+21. ####去行尾空格 [bronson/vim-trailing-whitespace](https://github.com/bronson/vim-trailing-whitespace)
+
+    将代码行最后无效的空格标红
+
+        [sd] ,空格    去掉当前行末尾空格
+
+22. ####赋值语句代码对齐 [godlygeek/tabular](https://github.com/godlygeek/tabular)
+
+    将代码,或者json等,进行对齐,具体见 [tabular-vim](http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
+
+        [sd]  可以选中多行,不选中默认操作当前行
+            ,a= 对齐等号表达式
+            ,a: 对齐冒号表达式(json/map等)
+
+23. ####符号匹配跳转[vim-scripts/matchit.zip](https://github.com/vim-scripts/matchit.zip)
+
+    选装
+
+    % 匹配成对的标签，跳转
+
+24. ####mark跳转 [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)
+
+
+25. 自定义文本对象 [kana/vim-textobj-user.git](https://github.com/kana/vim-textobj-user.git)
+
+   后面几个扩展对象的依赖
+
+   更多其他扩展,建 [wiki](https://github.com/kana/vim-textobj-user/wiki)
+
+   PS: 特希望有一个扩展支持 '' "" [] {} ()
+
+26. 行文本对象 [kana/vim-textobj-line](https://github.com/kana/vim-textobj-line)
+
+   增加文本对象: l
+
+        dal
+        yal
+        cil
+
+27. 缩进文本对象 [kana/vim-textobj-indent.git](https://github.com/kana/vim-textobj-indent.git)
+
+   增加文本对象: i
+
+   相同缩进属于同一块,对python很有用
+
+        dai
+        yai
+        cii
+
+28. 文件文本对象 [kana/vim-textobj-entire.git](https://github.com/kana/vim-textobj-entire.git)
+
+   增加文本对象: e
+
+        dae
+        yae
+        cie
+
+
+29. ####文件时光机 [sjl/gundo.vim](https://github.com/sjl/gundo.vim)
+
+    编辑文件时光机
+
+        [sd] ,h  查看文件编辑历史
+
+    附:同类插件 [mbbill/undotree](https://github.com/mbbill/undotree)
+
+
+30. ####括号上色高亮 [kien/rainbow_parentheses.vim](https://github.com/kien/rainbow_parentheses.vim)
+
+    演示
+
+    ![rainbow](https://github.com/wklken/gallery/blob/master/vim/rainbow_parentheses.png?raw=true)
+
+
+31. ####[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+
+   经典主题
+   ![solarized](https://github.com/wklken/gallery/blob/master/vim/solarized.png?raw=true)
+
+32. ####[tomasr/molokai](https://github.com/tomasr/molokai)
+
+   用sublime text2的同学应该很熟悉, 另一个主题,可选,偶尔换换味道
+   ![molokai](https://github.com/wklken/gallery/blob/master/vim/molokai.png?raw=true)	
+
+33. ####Buffer [fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim)
 
     buffer管理
     
@@ -412,40 +442,6 @@ clone到本地,配置到linux个人目录
             ,bn   切到后一个
             ,bp   切到前一个
             ,bd   关闭当前buffer
-
-30. ####Tagbar [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
-
-
-         [sd] <F4> 打开
-
-    演示
-
-    ![tagbar](https://github.com/wklken/gallery/blob/master/vim/tagbar.gif?raw=true)
-
-
-31. ####Markdown [plasticboy/vim-markdown](https://github.com/plasticboy/vim-markdown)
-
-    markdown语法,编辑md文件
-
-32. ####vim-bufferline [bling/vim-bufferline](https://github.com/bling/vim-bufferline)
-
-    状态栏显示buffer
-
-    演示
-    
-    in the statusline
-
-    ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-status.png?raw=true)
-
-    or the command bar
-
-    ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-command.png?raw=true)
-
-
-
-33. ####vimcdoc [asins/vimcdoc](https://github.com/asins/vimcdoc)
-
-    vim中文帮助文档
 
 
 # VIM TIPS

@@ -19,6 +19,59 @@
 "==========================================
 
 "==========================================
+" Initial 初始化
+"==========================================
+" 判断操作系统是否是 Windows 还是 Linux 
+let g:iswindows = 0
+let g:islinux = 0
+let g:ismac = 0
+let g:iscywin = 0
+if(has("win32") || has("win64") || has("win95") || has("win16"))
+    let g:iswindows = 1
+else
+    let g:islinux = 1
+endif
+
+" 判断是终端还是 Gvim 
+if has("gui_running")
+    let g:isGUI = 1
+else
+    let g:isGUI = 0
+endif
+
+" Windows Gvim 默认配置
+if (g:iswindows && g:isGUI)
+    source $VIMRUNTIME/vimrc_example.vim
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+    set diffexpr=MyDiff()
+
+    function MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        let eq = ''
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '\<cmd'
+                let cmd = '""' . $VIMRUNTIME . '\diff"'
+                let eq = '"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '\diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+    endfunction
+endif
+
+"==========================================
 " General Settings 基础设置
 "==========================================
 
@@ -202,6 +255,15 @@ set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set helplang=cn
+
+if (g:iswindows && g:isGUI)
+    "解决菜单乱码
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+
+    "解决consle输出乱码
+    language messages zh_CN.utf-8
+endif
 
 "set langmenu=zh_CN.UTF-8
 "set enc=2byte-gb18030
@@ -599,8 +661,13 @@ set nocompatible
 " configure Vundle
 filetype off " required! turn off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if g:islinux
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+else
+    set rtp+=$VIM/vimfiles/bundle/vundle/
+    call vundle#rc('$VIM/vimfiles/bundle/')
+endif
 
 
 "################### 插件管理 ###################
@@ -675,13 +742,13 @@ let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
 
 
 " 自动补全单引号，双引号等
-Bundle 'Raimondi/delimitMate'
+"Bundle 'Raimondi/delimitMate'
 "" for python docstring ",优化输入
-au FileType python let b:delimitMate_nesting_quotes = ['"']
+"au FileType python let b:delimitMate_nesting_quotes = ['"']
 
 " 自动补全html/xml标签
-Bundle 'docunext/closetag.vim'
-let g:closetag_html_style=1
+"Bundle 'docunext/closetag.vim'
+"let g:closetag_html_style=1
 
 
 "################### 快速编码 ###################
@@ -691,21 +758,21 @@ Bundle 'scrooloose/nerdcommenter'
 
 
 " 快速加入修改环绕字符
-Bundle 'tpope/vim-surround'
+"Bundle 'tpope/vim-surround'
 " for repeat -> enhance surround.vim, . to repeat command
-Bundle 'tpope/vim-repeat'
+"Bundle 'tpope/vim-repeat'
 
 " 快速去行尾空格 [, + <Space>]
-Bundle 'bronson/vim-trailing-whitespace'
-map <leader><space> :FixWhitespace<cr>
+"Bundle 'bronson/vim-trailing-whitespace'
+"map <leader><space> :FixWhitespace<cr>
 
 " 快速赋值语句对齐
-Bundle 'godlygeek/tabular'
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
+"Bundle 'godlygeek/tabular'
+"nmap <Leader>a= :Tabularize /=<CR>
+"vmap <Leader>a= :Tabularize /=<CR>
 " :号也对齐
-nmap <Leader>a: :Tabularize /:<CR>
-vmap <Leader>a: :Tabularize /:<CR>
+"nmap <Leader>a: :Tabularize /:<CR>
+"vmap <Leader>a: :Tabularize /:<CR>
 " :号不变
 "nmap <Leader>a: :Tabularize /:\zs<CR>
 "vmap <Leader>a: :Tabularize /:\zs<CR>
@@ -715,7 +782,7 @@ vmap <Leader>a: :Tabularize /:<CR>
 "更高效的移动 [,, + w/fx]
 Bundle 'Lokaltog/vim-easymotion'
 
-Bundle 'vim-scripts/matchit.zip'
+"Bundle 'vim-scripts/matchit.zip'
 
 " 显示marks - 方便自己进行标记和跳转
 " m[a-zA-Z] add mark
@@ -727,13 +794,13 @@ Bundle 'vim-scripts/matchit.zip'
 "################### 文本对象 ###################
 
 " 支持自定义文本对象
-Bundle 'kana/vim-textobj-user.git'
+"Bundle 'kana/vim-textobj-user.git'
 " 增加行文本对象: l   dal yal cil
-Bundle 'kana/vim-textobj-line'
+"Bundle 'kana/vim-textobj-line'
 " 增加文件文本对象: e   dae yae cie
-Bundle 'kana/vim-textobj-entire.git'
+"Bundle 'kana/vim-textobj-entire.git'
 " 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
-Bundle 'kana/vim-textobj-indent.git'
+"Bundle 'kana/vim-textobj-indent.git'
 
 "################### 快速选中 ###################
 " 选中区块
@@ -793,8 +860,8 @@ let g:gitgutter_highlight_lines = 1
 nnoremap <leader>gs :GitGutterToggle<CR>
 
 " edit history, 可以查看回到某个历史状态
-Bundle 'sjl/gundo.vim'
-nnoremap <leader>h :GundoToggle<CR>
+"Bundle 'sjl/gundo.vim'
+"nnoremap <leader>h :GundoToggle<CR>
 
 "################### 显示增强 ###################
 
@@ -931,8 +998,9 @@ let g:tagbar_type_markdown = {
 \ }
 
 "################### Input ###################
-Bundle 'vimim/vimim'
-
+if islinux
+    Bundle 'vimim/vimim'
+endif
 
 "################### 语言相关 ###################
 
