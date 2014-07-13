@@ -388,7 +388,7 @@ func! CompileRunGcc()
 "        exec "!go build %<"
         exec "!time go run %"
     elseif &filetype == 'mkd'
-        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!~/.vim/tools/markdown.pl % > %.html &"
         exec "!firefox %.html &"
 	endif
 endfunc
@@ -671,7 +671,7 @@ Bundle 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 " 定义存放代码片段的文件夹 .vim/snippets下，使用自定义和默认的，将会的到全局，有冲突的会提示
-let g:UltiSnipsSnippetDirectories=["snippets", 'UltiSnips']
+let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
 
 
 " 自动补全单引号，双引号等
