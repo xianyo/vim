@@ -7,7 +7,7 @@
 1. clone到本地,配置到linux个人目录（如果是从linux_config过来的，不需要clone）
 
         git clone https://github.com/xianyo/k-vim.git
-	./install.sh setup
+        ./install.sh setup
 
 
 # 快捷键
@@ -436,7 +436,7 @@
 ![vim-cheat-sheet-full.png](tips/pic/vim-cheat-sheet-full.png)
 ![vim_keyboard.png](tips/pic/vim_keyboard.png)
 ![vim_cheat_sheet_for_programmers.png](tips/pic/vim_cheat_sheet_for_programmers.png)
-![vim-for-programmers.png](tips/pic/vim-for-programmers.png)
+![vim_for_programmers.png](tips/pic/vim_for_programmers.png)
 
 
 
