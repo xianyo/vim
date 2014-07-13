@@ -843,6 +843,7 @@ Bundle 'sjl/gundo.vim'
 nnoremap <leader>h :GundoToggle<CR>
 
 Bundle 'YankRing.vim'
+let g:yankring_history_dir = '/tmp'
 
 "################### 显示增强 ###################
 
