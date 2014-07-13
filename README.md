@@ -4,7 +4,7 @@
 
 # 安装步骤
 
-1. clone到本地,配置到linux个人目录（如果是从linux_config过来的，不需要clone）
+clone到本地,配置到linux个人目录（如果是从linux_config过来的，不需要clone）
 
         git clone https://github.com/xianyo/k-vim.git
         ./install.sh setup
@@ -82,9 +82,6 @@
     7. 交换#/*号功能,#号为正向查找,*反向
 
 
----------------------------------
-
----------------------------------
 
 # 插件
 
