@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ["steup" = "$0" ]; then
+if [ "steup" = "$0" ]; then
 echo "Step0: Installing packages"
 if which apt-get >/dev/null; then
 	sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools python-dev git cscope Cmake
