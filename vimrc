@@ -1,12 +1,12 @@
 "==========================================
-" Author:  wklken
-" Version: 7
-" Email: wklken@yeah.net
-" BlogPost: http://wklken.me
+" Author:  zhuxy
+" Base on wklken config
+" Version: 8
+" BlogPost: http://zhuxy.com
 " ReadMe: README.md
-" Last_modify: 2014-03-15
+" Last_modify: 2014-07-13
 " Sections:
-"       -> Initial Plugin 加载插件
+"       -> Initial 初始化
 "       -> General Settings 基础设置
 "       -> Display Settings 展示/排版等界面格式设置
 "       -> FileEncode Settings 文件编码设置
@@ -14,36 +14,82 @@
 "       -> HotKey Settings  自定义快捷键
 "       -> FileType Settings  针对文件类型的设置
 "       -> Theme Settings  主题设置
-"
-"       -> 插件配置和具体设置在vimrc.bundles中
-"==========================================
-
+"       -> bundle 插件管理和配置项
 
 "==========================================
-" Initial Plugin 加载插件
+
+"==========================================
+" Initial 初始化
 "==========================================
 
-" 修改leader键
-let mapleader = ','
-let g:mapleader = ','
+" 判断操作系统是否是 Windows 还是 Linux 
+let g:iswindows = 0
+let g:islinux = 0
+let g:ismac = 0
+let g:iscygwin = 0
 
-" 开启语法高亮
-syntax on
-
-
-" install Vundle bundles
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
+if(has("win32") || has("win64") || has("win95") || has("win16"))
+    let g:iswindows = 1
+else
+    let g:islinux = 1
 endif
 
-" ensure ftdetect et al work by including this after the Vundle stuff
-filetype plugin indent on
+if has("mac") || has("macunix")
+    let g:ismac = 1
+endif
+
+if has("cygwin") 
+    let g:iscygwin = 1
+endif
+
+" 判断是终端还是 Gvim 
+if has("gui_running")
+    let g:isGUI = 1
+else
+    let g:isGUI = 0
+endif
+
+" Windows Gvim 默认配置> 做了一点修改
+if (g:iswindows && g:isGUI)
+    source $VIMRUNTIME/vimrc_example.vim
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+    set diffexpr=MyDiff()
+
+    function MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        let eq = ''
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '\<cmd'
+                let cmd = '""' . $VIMRUNTIME . '\diff"'
+                let eq = '"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '\diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+    endfunction
+endif
 
 "==========================================
 " General Settings 基础设置
 "==========================================
 
 "以下配置有详细说明，一些特性不喜欢可以直接注解掉
+
+" 修改leader键
+let mapleader = ','
+let g:mapleader = ','
 
 "set guifont=Monaco:h20          " 字体 && 字号
 
@@ -65,7 +111,11 @@ set shortmess=atI       " 启动的时候不显示那个援助索马里儿童的
 " 备份,到另一个位置. 防止误删, 目前是取消备份
 "set backup
 "set backupext=.bak
-"set backupdir=/tmp/vimbk/
+if iswindows
+    "set backupdir=$VIM/vimfiles/tmp/vimbk/
+else
+    "set backupdir=/tmp/vimbk/
+endif
 
 " 取消备份。 视情况自己改
 set nobackup
@@ -78,7 +128,11 @@ set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 if v:version >= 730
     set undofile                " keep a persistent backup file
-    set undodir=/tmp/vimundo/
+    if iswindows
+        set undodir=$VIM/vimfiles/tmp/vimundo/
+    else
+        set undodir=/tmp/vimundo/
+    endif
 endif
 
 set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
@@ -210,7 +264,6 @@ function! NumberToggle()
 endfunc
 nnoremap <C-n> :call NumberToggle()<cr>
 
-
 "==========================================
 " FileEncode Settings 文件编码,格式
 "==========================================
@@ -219,6 +272,14 @@ set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set helplang=cn
+if (g:iswindows && g:isGUI)
+    "解决菜单乱码
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+
+    "解决consle输出乱码
+    language messages zh_CN.utf-8
+endif
 "set langmenu=zh_CN.UTF-8
 "set enc=2byte-gb18030
 " 下面这句只影响普通模式 (非图形界面) 下的 Vim。
@@ -263,6 +324,219 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+
+" 自动切换目录为当前编辑文件所在目录
+au BufRead,BufNewFile,BufEnter * cd %:p:h
+
+"  < 单文件编译、连接、运行配置 >
+" 以下只做了 C、C++ 的单文件配置，其它语言可以参考以下配置增加
+
+" F9 一键保存、编译、连接存并运行
+map <F9> :call Run()<CR>
+imap <F9> <ESC>:call Run()<CR>
+
+" Ctrl + F9 一键保存并编译
+map <c-F9> :call Compile()<CR>
+imap <c-F9> <ESC>:call Compile()<CR>
+
+" Ctrl + F10 一键保存并连接
+map <c-F10> :call Link()<CR>
+imap <c-F10> <ESC>:call Link()<CR>
+
+let s:LastShellReturn_C = 0
+let s:LastShellReturn_L = 0
+let s:ShowWarning = 1
+let s:Obj_Extension = '.o'
+let s:Exe_Extension = '.exe'
+let s:Sou_Error = 0
+
+let s:windows_CFlags = 'gcc\ -fexec-charset=gbk\ -Wall\ -g\ -O0\ -c\ %\ -o\ %<.o'
+let s:linux_CFlags = 'gcc\ -Wall\ -g\ -O0\ -c\ %\ -o\ %<.o'
+
+let s:windows_CPPFlags = 'g++\ -fexec-charset=gbk\ -Wall\ -g\ -O0\ -c\ %\ -o\ %<.o'
+let s:linux_CPPFlags = 'g++\ -Wall\ -g\ -O0\ -c\ %\ -o\ %<.o'
+
+func! Compile()
+    exe ":ccl"
+    exe ":update"
+    let s:Sou_Error = 0
+    let s:LastShellReturn_C = 0
+    let Sou = expand("%:p")
+    let v:statusmsg = ''
+    if expand("%:e") == "c" || expand("%:e") == "cpp" || expand("%:e") == "cxx"
+        let Obj = expand("%:p:r").s:Obj_Extension
+        let Obj_Name = expand("%:p:t:r").s:Obj_Extension
+        if !filereadable(Obj) || (filereadable(Obj) && (getftime(Obj) < getftime(Sou)))
+            redraw!
+            if expand("%:e") == "c"
+                if g:iswindows
+                    exe ":setlocal makeprg=".s:windows_CFlags
+                else
+                    exe ":setlocal makeprg=".s:linux_CFlags
+                endif
+                echohl WarningMsg | echo " compiling..."
+                silent make
+            elseif expand("%:e") == "cpp" || expand("%:e") == "cxx"
+                if g:iswindows
+                    exe ":setlocal makeprg=".s:windows_CPPFlags
+                else
+                    exe ":setlocal makeprg=".s:linux_CPPFlags
+                endif
+                echohl WarningMsg | echo " compiling..."
+                silent make
+            endif
+            redraw!
+            if v:shell_error != 0
+                let s:LastShellReturn_C = v:shell_error
+            endif
+            if g:iswindows
+                if s:LastShellReturn_C != 0
+                    exe ":bo cope"
+                    echohl WarningMsg | echo " compilation failed"
+                else
+                    if s:ShowWarning
+                        exe ":bo cw"
+                    endif
+                    echohl WarningMsg | echo " compilation successful"
+                endif
+            else
+                if empty(v:statusmsg)
+                    echohl WarningMsg | echo " compilation successful"
+                else
+                    exe ":bo cope"
+                endif
+            endif
+        else
+            echohl WarningMsg | echo ""Obj_Name"is up to date"
+        endif
+    else
+        let s:Sou_Error = 1
+        echohl WarningMsg | echo " please choose the correct source file"
+    endif
+    exe ":setlocal makeprg=make"
+endfunc
+
+func! Link()
+    call Compile()
+    if s:Sou_Error || s:LastShellReturn_C != 0
+        return
+    endif
+    if expand("%:e") == "c" || expand("%:e") == "cpp" || expand("%:e") == "cxx"
+        let s:LastShellReturn_L = 0
+        let Sou = expand("%:p")
+        let Obj = expand("%:p:r").s:Obj_Extension
+        if g:iswindows
+            let Exe = expand("%:p:r").s:Exe_Extension
+            let Exe_Name = expand("%:p:t:r").s:Exe_Extension
+        else
+            let Exe = expand("%:p:r")
+            let Exe_Name = expand("%:p:t:r")
+        endif
+        let v:statusmsg = ''
+        if filereadable(Obj) && (getftime(Obj) >= getftime(Sou))
+            redraw!
+            if !executable(Exe) || (executable(Exe) && getftime(Exe) < getftime(Obj))
+                if expand("%:e") == "c"
+                    setlocal makeprg=gcc\ -o\ %<\ %<.o
+                    echohl WarningMsg | echo " linking..."
+                    silent make
+                elseif expand("%:e") == "cpp" || expand("%:e") == "cxx"
+                    setlocal makeprg=g++\ -o\ %<\ %<.o
+                    echohl WarningMsg | echo " linking..."
+                    silent make
+                endif
+                redraw!
+                if v:shell_error != 0
+                    let s:LastShellReturn_L = v:shell_error
+                endif
+                if g:iswindows
+                    if s:LastShellReturn_L != 0
+                        exe ":bo cope"
+                        echohl WarningMsg | echo " linking failed"
+                    else
+                        if s:ShowWarning
+                            exe ":bo cw"
+                        endif
+                        echohl WarningMsg | echo " linking successful"
+                    endif
+                else
+                    if empty(v:statusmsg)
+                        echohl WarningMsg | echo " linking successful"
+                    else
+                        exe ":bo cope"
+                    endif
+                endif
+            else
+                echohl WarningMsg | echo ""Exe_Name"is up to date"
+            endif
+        endif
+        setlocal makeprg=make
+    endif
+endfunc
+
+func! Run()
+    let s:ShowWarning = 0
+    call Link()
+    let s:ShowWarning = 1
+    if s:Sou_Error || s:LastShellReturn_C != 0 || s:LastShellReturn_L != 0
+        return
+    endif
+    let Sou = expand("%:p")
+    if expand("%:e") == "c" || expand("%:e") == "cpp" || expand("%:e") == "cxx"
+        let Obj = expand("%:p:r").s:Obj_Extension
+        if g:iswindows
+            let Exe = expand("%:p:r").s:Exe_Extension
+        else
+            let Exe = expand("%:p:r")
+        endif
+        if executable(Exe) && getftime(Exe) >= getftime(Obj) && getftime(Obj) >= getftime(Sou)
+            redraw!
+            echohl WarningMsg | echo " running..."
+            if g:iswindows
+                exe ":!%<.exe"
+            else
+                if g:isGUI
+                    exe ":!gnome-terminal -x bash -c './%<; echo; echo 请按 Enter 键继续; read'"
+                else
+                    exe ":!clear; ./%<"
+                endif
+            endif
+            redraw!
+            echohl WarningMsg | echo " running finish"
+        endif
+    endif
+endfunc
+
+" 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
+if has("cscope")
+    "设定可以使用 quickfix 窗口来查看 cscope 结果
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+    set cscopetag
+    "如果你想反向搜索顺序设置为1
+    set csto=0
+    "在当前目录中添加任何数据库
+    if filereadable("cscope.out")
+        cs add cscope.out
+    "否则添加数据库环境中所指出的
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set cscopeverbose
+    "快捷键设置
+    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+
+" ctags 工具配置
+" 对浏览代码非常的方便,可以在函数,变量之间跳转等
+set tags=./tags;       "向上级目录递归查找tags文件（好像只有在Windows下才有用）
 
 "==========================================
 " HotKey Settings  自定义快捷键设置
@@ -466,11 +740,11 @@ nnoremap <buffer> <F10> :exec '!python' shellescape(@%, 1)<cr>
 " Theme Settings  主题设置
 "==========================================
 
-" Set extra options when running in GUI mode
-if has("gui_running")
+" 显示/隐藏菜单栏、工具栏、滚动条，可用 Ctrl + F11 切换
+if g:isGUI
     set guifont=Monaco:h14
+    set guioptions-=m
     set guioptions-=T
-    set guioptions+=e
     set guioptions-=r
     set guioptions-=L
     set guitablabel=%M\ %t
@@ -478,6 +752,17 @@ if has("gui_running")
     set linespace=2
     set noimd
     set t_Co=256
+    map <silent> <c-F11> :if &guioptions =~# 'm' <Bar>
+        \set guioptions-=m <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=r <Bar>
+        \set guioptions-=L <Bar>
+    \else <Bar>
+        \set guioptions+=m <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=r <Bar>
+        \set guioptions+=L <Bar>
+    \endif<CR>
 endif
 
 " theme主题
@@ -502,4 +787,358 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+
+
+"==========================================
+" bundle 插件管理和配置项
+"==========================================
+"------------------------------------------- begin of configs --------------------------------------------
+
+"################### 包依赖 #####################
+"package dependence:  ctags
+"python dependence:  pep8, pyflake
+"
+"非兼容vi模式。去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
+set nocompatible
+" configure Vundle
+filetype off " required! turn off
+
+if g:islinux
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+else
+    set rtp+=$VIM/vimfiles/bundle/vundle/
+    call vundle#rc('$VIM/vimfiles/bundle/')
+endif
+
+
+"################### 插件管理 ###################
+
+"使用Vundle来管理插件
+" vim plugin bundle control, command model
+" :BundleInstall     install 安装配置的插件
+" :BundleInstall!    update  更新
+" :BundleClean       remove plugin not in list 删除本地无用插件
+Bundle 'gmarik/vundle'
+
+
+"################### 基础 ######################
+
+" 多语言语法检查
+Bundle 'scrooloose/syntastic'
+let g:syntastic_error_symbol='>>'
+let g:syntastic_warning_symbol='>'
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_highlighting = 0
+"let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
+let g:syntastic_python_checkers=['pyflakes'] " 使用pyflakes,速度比pylint快
+let g:syntastic_javascript_checkers = ['jsl', 'jshint']
+let g:syntastic_html_checkers=['tidy', 'jshint']
+highlight SyntasticErrorSign guifg=white guibg=black
+
+
+"################### 自动补全 ###################
+
+" 代码自动补全
+"迄今为止用到的最好的自动VIM自动补全插件
+Bundle 'Valloric/YouCompleteMe'
+"youcompleteme  默认tab  s-tab 和自动补全冲突
+"let g:ycm_key_list_select_completion=['<c-n>']
+let g:ycm_key_list_select_completion = ['<Down>']
+"let g:ycm_key_list_previous_completion=['<c-p>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
+"let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
+let g:ycm_collect_identifiers_from_tags_files = 1
+" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
+" old version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+endif
+" new version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+endif
+
+
+" 直接触发自动补全
+let g:ycm_key_invoke_completion = '<C-Space>'
+" 黑名单,不启用
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'gitcommit' : 1,
+      \}
+
+
+" 代码片段快速插入
+Bundle 'SirVer/ultisnips'
+" 代码片段资源,需要学习
+" Snippets are separated from the engine. Add this if you want them:
+Bundle 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" 定义存放代码片段的文件夹 .vim/snippets下，使用自定义和默认的，将会的到全局，有冲突的会提示
+let g:UltiSnipsSnippetDirectories=["snippets", 'UltiSnips']
+
+
+" 自动补全单引号，双引号等
+Bundle 'Raimondi/delimitMate'
+"" for python docstring ",优化输入
+au FileType python let b:delimitMate_nesting_quotes = ['"']
+
+" 自动补全html/xml标签
+Bundle 'docunext/closetag.vim'
+let g:closetag_html_style=1
+
+
+"################### 快速编码 ###################
+
+" 快速注释
+Bundle 'scrooloose/nerdcommenter'
+
+
+" 快速加入修改环绕字符
+Bundle 'tpope/vim-surround'
+" for repeat -> enhance surround.vim, . to repeat command
+Bundle 'tpope/vim-repeat'
+
+" 快速去行尾空格 [, + <Space>]
+Bundle 'bronson/vim-trailing-whitespace'
+map <leader><space> :FixWhitespace<cr>
+
+" 快速赋值语句对齐
+Bundle 'godlygeek/tabular'
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+" :号也对齐
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+" :号不变
+"nmap <Leader>a: :Tabularize /:\zs<CR>
+"vmap <Leader>a: :Tabularize /:\zs<CR>
+
+"################### 快速移动 ###################
+
+"更高效的移动 [,, + w/fx]
+Bundle 'Lokaltog/vim-easymotion'
+
+Bundle 'vim-scripts/matchit.zip'
+
+" 显示marks - 方便自己进行标记和跳转
+" m[a-zA-Z] add mark
+" '[a-zA-Z] go to mark
+" m<Space>  del all marks
+"Bundle "kshenoy/vim-signature"
+
+
+"################### 文本对象 ###################
+
+" 支持自定义文本对象
+Bundle 'kana/vim-textobj-user.git'
+" 增加行文本对象: l   dal yal cil
+Bundle 'kana/vim-textobj-line'
+" 增加文件文本对象: e   dae yae cie
+Bundle 'kana/vim-textobj-entire.git'
+" 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
+Bundle 'kana/vim-textobj-indent.git'
+
+"################### 快速选中 ###################
+" 选中区块
+Bundle 'terryma/vim-expand-region'
+map + <Plug>(expand_region_expand)
+map _ <Plug>(expand_region_shrink)
+
+" 多光标选中编辑
+Bundle 'terryma/vim-multiple-cursors'
+let g:multi_cursor_use_default_mapping=0
+" Default mapping
+let g:multi_cursor_next_key='<C-m>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+"################### 功能相关 ###################
+
+" 文件搜索
+Bundle 'kien/ctrlp.vim'
+let g:ctrlp_map = '<leader>p'
+let g:ctrlp_cmd = 'CtrlP'
+map <leader>f :CtrlPMRU<CR>
+"set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux"
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz)$',
+    \ }
+"\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+" ctrlp插件1 - 不用ctag进行函数快速跳转
+Bundle 'tacahiroy/ctrlp-funky'
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
+
+let g:ctrlp_extensions = ['funky']
+
+
+" git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
+Bundle 'tpope/vim-fugitive'
+" :Gdiff  :Gstatus :Gvsplit
+nnoremap <leader>ge :Gdiff<CR>
+
+" 同git diff,实时展示文件中修改的行
+" 只是不喜欢除了行号多一列, 默认关闭,gs时打开
+Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_enabled = 0
+let g:gitgutter_highlight_lines = 1
+nnoremap <leader>gs :GitGutterToggle<CR>
+
+" edit history, 可以查看回到某个历史状态
+Bundle 'sjl/gundo.vim'
+nnoremap <leader>h :GundoToggle<CR>
+
+"################### 显示增强 ###################
+
+" 新的airline配置
+Bundle 'bling/vim-airline'
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '❮'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+
+" 状态栏显示buffer
+Bundle 'bling/vim-bufferline'
+
+”中文帮助
+Bundle 'asins/vimcdoc'
+
+"括号显示增强
+Bundle 'kien/rainbow_parentheses.vim'
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 40
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" 代码缩进
+" https://github.com/nathanaelkane/vim-indent-guides
+"Bundle 'nathanaelkane/vim-indent-guides'
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+"hi IndentGuidesOdd  guibg=red   ctermbg=3
+"hi IndentGuidesEven guibg=green ctermbg=4
+"hi IndentGuidesOdd  ctermbg=black
+"hi IndentGuidesEven ctermbg=darkgrey
+
+"################### 显示增强-主题 ###################"
+
+"主题 solarized
+Bundle 'altercation/vim-colors-solarized'
+"let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+
+"主题 molokai
+Bundle 'tomasr/molokai'
+"let g:molokai_original = 1
+
+
+"################### 快速导航 ###################
+"目录导航
+Bundle 'scrooloose/nerdtree'
+map <leader>n :NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+"let NERDTreeDirArrows=0
+"let g:netrw_home='~/bak'
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+
+"for minibufferexpl
+"Bundle 'fholgado/minibufexpl.vim'
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
+"解决FileExplorer窗口变小问题
+"let g:miniBufExplForceSyntaxEnable = 1
+"let g:miniBufExplorerMoreThanOne=2
+"let g:miniBufExplCycleArround=1
+
+" 默认方向键左右可以切换buffer
+nnoremap <TAB> :MBEbn<CR>
+noremap <leader>bn :MBEbn<CR>
+noremap <leader>bp :MBEbp<CR>
+noremap <leader>bd :MBEbd<CR>
+
+"标签导航
+Bundle 'majutsushi/tagbar'
+nmap <F9> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
+" markdown
+let g:tagbar_type_markdown = {
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : '~/.vim/tools/markdown2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+\ }
+
+"################### 语言相关 ###################
+
+"###### Markdown #########
+Bundle 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled=1
+
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
+"markdown to HTML  
+nmap md :!~/.vim/tools/markdown.pl % > %.html <CR><CR>
+nmap fi :!firefox %.html & <CR><CR>
+
+
+filetype plugin indent on
+
+"------------------------------------------- end of configs --------------------------------------------
 
