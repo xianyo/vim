@@ -4,9 +4,10 @@
 
 # 安装步骤
 
-clone到本地,配置到linux个人目录（如果是从linux_config过来的，不需要clone）
+clone到本地,配置到linux个人目录
 
-        git clone https://github.com/xianyo/k-vim.git
+        git clone https://github.com/xianyo/k-vim.git ~/.vim
+        cd ~/.vim
         ./install.sh setup
 
 
@@ -402,7 +403,8 @@ clone到本地,配置到linux个人目录（如果是从linux_config过来的，
 
 29. ####Buffer [fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim)
 
-    必装，buffer管理, 可以查找其他同类插件
+    buffer管理
+    注释掉了。用vim-bufferline
 
         [sd]
             <Tab>  切换buffer
@@ -421,11 +423,28 @@ clone到本地,配置到linux个人目录（如果是从linux_config过来的，
     ![tagbar](https://github.com/wklken/gallery/blob/master/vim/tagbar.gif?raw=true)
 
 
-31. ####Markdown
-
-    [plasticboy/vim-markdown](https://github.com/plasticboy/vim-markdown)
+31. ####Markdown [plasticboy/vim-markdown](https://github.com/plasticboy/vim-markdown)
 
     markdown语法,编辑md文件
+
+32. ####vim-bufferline [bling/vim-bufferline](https://github.com/bling/vim-bufferline)
+
+    状态栏显示buffer
+
+    演示
+    in the statusline
+
+    ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-status.png?raw=true)
+
+    or the command bar
+
+    ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-command.png?raw=true)
+
+
+
+33. ####vimcdoc [asins/vimcdoc](https://github.com/asins/vimcdoc)
+
+    vim中文帮助文档
 
 
 # VIM TIPS
