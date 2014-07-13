@@ -132,13 +132,12 @@ clone到本地,配置到linux个人目录
 
 4. ####代码片段快速插入 [SirVer/ultisnips](https://github.com/SirVer/ultisnips) +[honza/vim-snippets](https://github.com/honza/vim-snippets)
 
-    注意：如果是之前安装的k-vim，更新后发现报错，是ultisnips版本问题 执行:BundleUpdate即可
 
     必装，效率杀手锏，快速插入自定义的代码片段
 
     代码片段集合，有缺陷
 
-    自动补全加这个,高效必备, 针对各种语言已经带了一份配置了，可以到安装目录下查看具体，我有针对性补全一份，在snippets目录下，可自行修改
+    自动补全加这个,高效必备, 针对各种语言已经带了一份配置了，可以到安装目录下查看具体，我有针对性补全一份，在my_snippets目录下，可自行修改
 
     演示
 
@@ -376,7 +375,7 @@ clone到本地,配置到linux个人目录
     必装,开启目录树导航
 
         [sd]
-            ,n  打开 关闭树形目录结构
+            ,n  打开 关闭树形目录结构 或者F3
 
             在nerdtree窗口常用操作：(小写当前，大写root)
             x.......收起当前目录树
@@ -404,6 +403,7 @@ clone到本地,配置到linux个人目录
 29. ####Buffer [fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim)
 
     buffer管理
+    
     注释掉了。用vim-bufferline
 
         [sd]
@@ -416,7 +416,7 @@ clone到本地,配置到linux个人目录
 30. ####Tagbar [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
 
 
-         [sd] <F9> 打开
+         [sd] <F4> 打开
 
     演示
 
@@ -432,6 +432,7 @@ clone到本地,配置到linux个人目录
     状态栏显示buffer
 
     演示
+    
     in the statusline
 
     ![vim-bufferline](https://github.com/bling/vim-bufferline/blob/master/img/bufferline-status.png?raw=true)
