@@ -32,6 +32,10 @@ else
     let g:islinux = 1
 endif
 
+if has("mac") || has("macunix")
+    let g:ismac = 1
+endif
+
 " 判断是终端还是 Gvim 
 if has("gui_running")
     let g:isGUI = 1
@@ -368,10 +372,10 @@ nnoremap gj j
 " F6 代码格式优化化
 " F7 编译运行
 " F8 C,C++的调试
-" F9 
+" F9 代码浏览
 " F10 
-" F11 
-" F12 
+" F11 分割窗口最大化
+" F12 vimshell
 
 " I can type :help on my own, thanks.  Protect your fat fingers from the evils of <F1>
 noremap <F1> <Esc>"
@@ -741,15 +745,6 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
 
 
-" 自动补全单引号，双引号等
-"Bundle 'Raimondi/delimitMate'
-"" for python docstring ",优化输入
-"au FileType python let b:delimitMate_nesting_quotes = ['"']
-
-" 自动补全html/xml标签
-"Bundle 'docunext/closetag.vim'
-"let g:closetag_html_style=1
-
 
 "################### 快速编码 ###################
 
@@ -758,21 +753,17 @@ Bundle 'scrooloose/nerdcommenter'
 
 
 " 快速加入修改环绕字符
-"Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-surround'
 " for repeat -> enhance surround.vim, . to repeat command
-"Bundle 'tpope/vim-repeat'
-
-" 快速去行尾空格 [, + <Space>]
-"Bundle 'bronson/vim-trailing-whitespace'
-"map <leader><space> :FixWhitespace<cr>
+Bundle 'tpope/vim-repeat'
 
 " 快速赋值语句对齐
-"Bundle 'godlygeek/tabular'
-"nmap <Leader>a= :Tabularize /=<CR>
-"vmap <Leader>a= :Tabularize /=<CR>
+Bundle 'godlygeek/tabular'
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
 " :号也对齐
-"nmap <Leader>a: :Tabularize /:<CR>
-"vmap <Leader>a: :Tabularize /:<CR>
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
 " :号不变
 "nmap <Leader>a: :Tabularize /:\zs<CR>
 "vmap <Leader>a: :Tabularize /:\zs<CR>
@@ -782,25 +773,13 @@ Bundle 'scrooloose/nerdcommenter'
 "更高效的移动 [,, + w/fx]
 Bundle 'Lokaltog/vim-easymotion'
 
-"Bundle 'vim-scripts/matchit.zip'
 
 " 显示marks - 方便自己进行标记和跳转
 " m[a-zA-Z] add mark
 " '[a-zA-Z] go to mark
 " m<Space>  del all marks
-"Bundle "kshenoy/vim-signature"
+Bundle "kshenoy/vim-signature"
 
-
-"################### 文本对象 ###################
-
-" 支持自定义文本对象
-"Bundle 'kana/vim-textobj-user.git'
-" 增加行文本对象: l   dal yal cil
-"Bundle 'kana/vim-textobj-line'
-" 增加文件文本对象: e   dae yae cie
-"Bundle 'kana/vim-textobj-entire.git'
-" 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
-"Bundle 'kana/vim-textobj-indent.git'
 
 "################### 快速选中 ###################
 " 选中区块
@@ -860,8 +839,10 @@ let g:gitgutter_highlight_lines = 1
 nnoremap <leader>gs :GitGutterToggle<CR>
 
 " edit history, 可以查看回到某个历史状态
-"Bundle 'sjl/gundo.vim'
-"nnoremap <leader>h :GundoToggle<CR>
+Bundle 'sjl/gundo.vim'
+nnoremap <leader>h :GundoToggle<CR>
+
+Bundle 'YankRing.vim'
 
 "################### 显示增强 ###################
 
@@ -881,6 +862,10 @@ let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
+
+" 分割窗口最大化
+Bundle 'ZoomWin'
+nnoremap <F11> <c-w>o
 
 " 状态栏显示buffer
 Bundle 'bling/vim-bufferline'
@@ -998,9 +983,24 @@ let g:tagbar_type_markdown = {
 \ }
 
 "################### Input ###################
-if islinux
-    Bundle 'vimim/vimim'
-endif
+Bundle 'vimim/vimim'
+
+
+"################### 代码 ###################
+Bundle 'wesleyche/SrcExpl'
+nmap <F9> :SrcExplToggle<CR>
+Bundle 'std_c.zip'
+
+"Bundle 'a.vim'
+"Bundle 'Align'
+"Bundle 'jiangmiao/auto-pairs'
+"Bundle 'ccvext.vim'
+"nmap <F10> <Leader>sy
+"Bundle 'cSyntaxAfter'
+
+"Bundle 'Shougo/vimproc.vim'
+"Bundle 'Shougo/vimshell.vim'
+"nmap <F12> :VimShell<CR>
 
 "################### 语言相关 ###################
 

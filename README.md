@@ -36,10 +36,10 @@ clone到本地,配置到linux个人目录
     F6 代码格式优化化
     F7 编译运行
     F8 C,C++的调试
-    F9 
+    F9 代码浏览
     F10 
-    F11 
-    F12 
+    F11 分割窗口最大化
+    F12 vimshell
 
     4. 分屏移动
 
@@ -311,23 +311,7 @@ clone到本地,配置到linux个人目录
     ![easy_motion](https://github.com/wklken/gallery/blob/master/vim/easymotion.gif?raw=true)
 
     
-18. ####引号配对补全 [Raimondi/delimitMate](https://github.com/Raimondi/delimitMate)
-
-    必装，输入引号,括号时,自动补全
-
-    对python的docstring 三引号做了处理(只处理""", '''暂时没配，可以自己加)
-
-    演示
-
-    ![delimitmate](https://github.com/wklken/gallery/blob/master/vim/delimate.gif?raw=true)
-
-    附:同类插件 [kana/vim-smartinput](https://github.com/kana/vim-smartinput)
-
-
-19. ####html/xml标签配对补全 [docunext/closetag.vim](https://github.com/docunext/closetag.vim)
-
-
-20. ####快速编辑 [tpope/vim-surround](https://github.com/tpope/vim-surround) +[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
+28. ####快速编辑 [tpope/vim-surround](https://github.com/tpope/vim-surround) +[tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 
     必装，很给力的功能，快速给词加环绕符号,例如引号
 
@@ -346,13 +330,7 @@ clone到本地,配置到linux个人目录
     ![surround](https://github.com/wklken/gallery/blob/master/vim/surround.gif?raw=true)
 
 
-21. ####去行尾空格 [bronson/vim-trailing-whitespace](https://github.com/bronson/vim-trailing-whitespace)
-
-    将代码行最后无效的空格标红
-
-        [sd] ,空格    去掉当前行末尾空格
-
-22. ####赋值语句代码对齐 [godlygeek/tabular](https://github.com/godlygeek/tabular)
+29. ####赋值语句代码对齐 [godlygeek/tabular](https://github.com/godlygeek/tabular)
 
     将代码,或者json等,进行对齐,具体见 [tabular-vim](http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
 
@@ -360,51 +338,11 @@ clone到本地,配置到linux个人目录
             ,a= 对齐等号表达式
             ,a: 对齐冒号表达式(json/map等)
 
-23. ####符号匹配跳转[vim-scripts/matchit.zip](https://github.com/vim-scripts/matchit.zip)
 
-    选装
-
-    % 匹配成对的标签，跳转
-
-24. ####mark跳转 [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)
+20. ####mark跳转 [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)
 
 
-25. 自定义文本对象 [kana/vim-textobj-user.git](https://github.com/kana/vim-textobj-user.git)
-
-   后面几个扩展对象的依赖
-
-   更多其他扩展,建 [wiki](https://github.com/kana/vim-textobj-user/wiki)
-
-   PS: 特希望有一个扩展支持 '' "" [] {} ()
-
-26. 行文本对象 [kana/vim-textobj-line](https://github.com/kana/vim-textobj-line)
-
-   增加文本对象: l
-
-        dal
-        yal
-        cil
-
-27. 缩进文本对象 [kana/vim-textobj-indent.git](https://github.com/kana/vim-textobj-indent.git)
-
-   增加文本对象: i
-
-   相同缩进属于同一块,对python很有用
-
-        dai
-        yai
-        cii
-
-28. 文件文本对象 [kana/vim-textobj-entire.git](https://github.com/kana/vim-textobj-entire.git)
-
-   增加文本对象: e
-
-        dae
-        yae
-        cie
-
-
-29. ####文件时光机 [sjl/gundo.vim](https://github.com/sjl/gundo.vim)
+21. ####文件时光机 [sjl/gundo.vim](https://github.com/sjl/gundo.vim)
 
     编辑文件时光机
 
@@ -413,24 +351,24 @@ clone到本地,配置到linux个人目录
     附:同类插件 [mbbill/undotree](https://github.com/mbbill/undotree)
 
 
-30. ####括号上色高亮 [kien/rainbow_parentheses.vim](https://github.com/kien/rainbow_parentheses.vim)
+22. ####括号上色高亮 [kien/rainbow_parentheses.vim](https://github.com/kien/rainbow_parentheses.vim)
 
     演示
 
     ![rainbow](https://github.com/wklken/gallery/blob/master/vim/rainbow_parentheses.png?raw=true)
 
 
-31. ####[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+23. ####[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
 
    经典主题
    ![solarized](https://github.com/wklken/gallery/blob/master/vim/solarized.png?raw=true)
 
-32. ####[tomasr/molokai](https://github.com/tomasr/molokai)
+24. ####[tomasr/molokai](https://github.com/tomasr/molokai)
 
    用sublime text2的同学应该很熟悉, 另一个主题,可选,偶尔换换味道
    ![molokai](https://github.com/wklken/gallery/blob/master/vim/molokai.png?raw=true)	
 
-33. ####Buffer [fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim)
+25. ####Buffer [fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim)
 
     buffer管理
     
@@ -442,6 +380,16 @@ clone到本地,配置到linux个人目录
             ,bn   切到后一个
             ,bp   切到前一个
             ,bd   关闭当前buffer
+
+26. ####YankRing [YankRing.vim](http://www.vim.org/scripts/script.php?script_id=1234)
+
+27. ####SrcExpl [wesleyche/SrcExpl](https://github.com/wesleyche/SrcExpl)
+
+28. ####ZoomWin [ZoomWin](http://www.vim.org/scripts/script.php?script_id=508)
+
+29. ####std_c [std_c.zip](http://www.vim.org/scripts/script.php?script_id=234)
+
+29. ####vimshell [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
 
 
 # VIM TIPS
