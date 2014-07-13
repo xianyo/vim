@@ -431,6 +431,12 @@
     markdown语法,编辑md文件
 
 
+# VIM TIPS
+
+![vim-cheat-sheet-full.png](tips/pic/vim-cheat-sheet-full.png)
+![vim_keyboard.png](tips/pic/vim_keyboard.png)
+![vim_cheat_sheet_for_programmers.png](tips/pic/vim_cheat_sheet_for_programmers.png)
+![vim-for-programmers.png](tips/pic/vim-for-programmers.png)
 
 
 
