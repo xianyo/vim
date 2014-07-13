@@ -264,7 +264,7 @@ clone到本地,配置到linux个人目录
     ![expand-region](https://raw.github.com/terryma/vim-expand-region/master/expand-region.gif)
 
 
-14. ####多光标选中编辑 [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+14. ####多光标选中编辑 [terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 
     多光标批量操作
 
@@ -358,12 +358,12 @@ clone到本地,配置到linux个人目录
     ![rainbow](https://github.com/wklken/gallery/blob/master/vim/rainbow_parentheses.png?raw=true)
 
 
-23. ####[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+23. ####solarized主题[altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
 
    经典主题
    ![solarized](https://github.com/wklken/gallery/blob/master/vim/solarized.png?raw=true)
 
-24. ####[tomasr/molokai](https://github.com/tomasr/molokai)
+24. ####molokai主题[tomasr/molokai](https://github.com/tomasr/molokai)
 
    用sublime text2的同学应该很熟悉, 另一个主题,可选,偶尔换换味道
    ![molokai](https://github.com/wklken/gallery/blob/master/vim/molokai.png?raw=true)	
@@ -389,7 +389,9 @@ clone到本地,配置到linux个人目录
 
 29. ####std_c [std_c.zip](http://www.vim.org/scripts/script.php?script_id=234)
 
-29. ####vimshell [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
+30. ####vimshell [Shougo/vimshell.vim](https://github.com/Shougo/vimshell.vim)
+
+31. ####vimim [vimim/vimim](https://github.com/vimim/vimim)
 
 
 # VIM TIPS
