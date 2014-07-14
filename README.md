@@ -273,16 +273,6 @@ clone到本地,配置到linux个人目录
     :sh                      将启动一个子shell，使用^d(ctrl+d)返回vi
     :so file                 在shell程序file中读入和执行命令
 
-    ##### vi中的宏与缩写
-    (避免使用控制键和符号，不要使用字符K、V、g、q、v、*、=和功能键)
-
-    选项                         作用
-    :map key command_seq     定义一个键来运行command_seq，如:map e ea，无论什么时候都可以e移到一个字的末尾来追加文本
-    :map                     在状态行显示所有已定义的宏
-    :umap key                删除该键的宏
-    :ab string1 string2      定义一个缩写，使得当插入string1时，用string2替换string1。当要插入文本时，键入string1然后按Esc键，系统就插入了string2
-    :ab                      显示所有缩写
-    :una string              取消string的缩写
 
     ##### 在vi中缩进文本
 
