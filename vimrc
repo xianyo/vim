@@ -478,15 +478,6 @@ map <C-l> <C-W>l
 " ex mode commands made easy 用于快速进入命令行
 nnoremap ; :
 
-
-" 命令行模式增强，ctrl - a到行首， -e 到行尾
-cnoremap <C-j> <t_kd>
-cnoremap <C-k> <t_ku>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-
-" 搜索相关
-
 " 进入搜索Use sane regexes"
 nnoremap / /\v
 vnoremap / /\v
@@ -539,10 +530,6 @@ inoremap kj <Esc>
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
-
-"Jump to start and end of line using the home row keys
-nmap t o<ESC>k
-nmap T O<ESC>j
 
 " Quickly close the current window
 nnoremap <leader>q :q<CR>
