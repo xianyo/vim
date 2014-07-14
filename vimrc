@@ -473,10 +473,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Go to home and end using capitalized directions
-noremap H ^
-noremap L $
-
 
 "Map ; to : and save a million keystrokes
 " ex mode commands made easy 用于快速进入命令行
@@ -491,8 +487,6 @@ cnoremap <C-e> <End>
 
 " 搜索相关
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
 " 进入搜索Use sane regexes"
 nnoremap / /\v
 vnoremap / /\v
@@ -504,9 +498,6 @@ nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
-" switch # *
-nnoremap # *
-nnoremap * #
 
 " 去掉搜索高亮
 noremap <silent><leader>/ :nohls<CR>
@@ -532,9 +523,6 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 vnoremap < <gv
 vnoremap > >gv
 
-" y$ -> Y Make Y behave like other capitals
-map Y y$
-
 " select all
 map <Leader>sa ggVG"
 
@@ -558,15 +546,6 @@ nmap T O<ESC>j
 
 " Quickly close the current window
 nnoremap <leader>q :q<CR>
-
-" Swap implementations of ` and ' jump to markers
-" By default, ' jumps to the marked line, ` jumps to the marked line and
-" column, so swap them
-nnoremap ' `
-nnoremap ` '
-
-" remap U to <C-r> for easier redo
-nnoremap U <C-r>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
