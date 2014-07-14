@@ -64,8 +64,6 @@ clone到本地,配置到linux个人目录
     , + sa    select all,全选
     , + v     选中段落
     kj        代替<Esc>，不用到角落去按esc了
-    t         新起一行，下面，不进入插入模式
-    T         新起一行，上面
     , + q     :q，退出vim
 
 
