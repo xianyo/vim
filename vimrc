@@ -36,6 +36,7 @@ if has("mac") || has("macunix")
     let g:ismac = 1
 endif
 
+
 " 判断是终端还是 Gvim 
 if has("gui_running")
     let g:isGUI = 1
@@ -211,6 +212,8 @@ set foldenable
 " marker    使用标记进行折叠, 默认标记是 {{{ 和 }}}
 set foldmethod=indent
 set foldlevel=99
+
+syntax on
 
 " 缩进配置
 
@@ -658,51 +661,50 @@ let g:syntastic_error_symbol='>>'
 let g:syntastic_warning_symbol='>'
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_highlighting = 0
-"let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
-let g:syntastic_python_checkers=['pyflakes'] " 使用pyflakes,速度比pylint快
-let g:syntastic_javascript_checkers = ['jsl', 'jshint']
-let g:syntastic_html_checkers=['tidy', 'jshint']
 highlight SyntasticErrorSign guifg=white guibg=black
 
 
 "################### 自动补全 ###################
 
-" 代码自动补全
-"迄今为止用到的最好的自动VIM自动补全插件
-Bundle 'Valloric/YouCompleteMe'
-"youcompleteme  默认tab  s-tab 和自动补全冲突
-"let g:ycm_key_list_select_completion=['<c-n>']
-let g:ycm_key_list_select_completion = ['<Down>']
-"let g:ycm_key_list_previous_completion=['<c-p>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
-let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
-"let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
-let g:ycm_collect_identifiers_from_tags_files = 1
-" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-" old version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+let g:isUseYouCompleteMe = 0
+
+if g:isUseYouCompleteMe
+    " 代码自动补全
+    "迄今为止用到的最好的自动VIM自动补全插件
+    Bundle 'Valloric/YouCompleteMe'
+    "youcompleteme  默认tab  s-tab 和自动补全冲突
+    "let g:ycm_key_list_select_completion=['<c-n>']
+    let g:ycm_key_list_select_completion = ['<Down>']
+    "let g:ycm_key_list_previous_completion=['<c-p>']
+    let g:ycm_key_list_previous_completion = ['<Up>']
+    let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+    let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
+    "let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    " 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
+    " old version
+    if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+    endif
+    " new version
+    if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+    endif
+
+
+    " 直接触发自动补全
+    let g:ycm_key_invoke_completion = '<C-Space>'
+    " 黑名单,不启用
+    let g:ycm_filetype_blacklist = {
+          \ 'tagbar' : 1,
+          \ 'gitcommit' : 1,
+          \}
+      
 endif
-" new version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-endif
-
-
-" 直接触发自动补全
-let g:ycm_key_invoke_completion = '<C-Space>'
-" 黑名单,不启用
-let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'gitcommit' : 1,
-      \}
-
 
 " 代码片段快速插入
 Bundle 'SirVer/ultisnips'
-" 代码片段资源,需要学习
 " Snippets are separated from the engine. Add this if you want them:
 Bundle 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<tab>"
@@ -715,53 +717,58 @@ let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
 "################### 快速编码 ###################
 
 " 快速注释
-Bundle 'scrooloose/nerdcommenter'
+"Bundle 'scrooloose/nerdcommenter'
 
 
 " 快速加入修改环绕字符
-Bundle 'tpope/vim-surround'
+"Bundle 'tpope/vim-surround'
 " for repeat -> enhance surround.vim, . to repeat command
-Bundle 'tpope/vim-repeat'
+"Bundle 'tpope/vim-repeat'
 
-" 快速赋值语句对齐
-Bundle 'godlygeek/tabular'
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-" :号也对齐
-nmap <Leader>a: :Tabularize /:<CR>
-vmap <Leader>a: :Tabularize /:<CR>
-" :号不变
-"nmap <Leader>a: :Tabularize /:\zs<CR>
-"vmap <Leader>a: :Tabularize /:\zs<CR>
+let g:isUsetabular = 0
+if g:isUsetabular
+    " 快速赋值语句对齐
+    Bundle 'godlygeek/tabular'
+    nmap <Leader>a= :Tabularize /=<CR>
+    vmap <Leader>a= :Tabularize /=<CR>
+    " :号也对齐
+    nmap <Leader>a: :Tabularize /:<CR>
+    vmap <Leader>a: :Tabularize /:<CR>
+    " :号不变
+    "nmap <Leader>a: :Tabularize /:\zs<CR>
+    "vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
 
 "################### 快速移动 ###################
 
 "更高效的移动 [,, + w/fx]
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion'
 
 
 " 显示marks - 方便自己进行标记和跳转
 " m[a-zA-Z] add mark
 " '[a-zA-Z] go to mark
 " m<Space>  del all marks
-Bundle "kshenoy/vim-signature"
+"Bundle "kshenoy/vim-signature"
 
 
 "################### 快速选中 ###################
-" 选中区块
-Bundle 'terryma/vim-expand-region'
-map + <Plug>(expand_region_expand)
-map _ <Plug>(expand_region_shrink)
+let g:isUseterryma = 0
+if g:isUseterryma
+    " 选中区块
+    Bundle 'terryma/vim-expand-region'
+    map + <Plug>(expand_region_expand)
+    map _ <Plug>(expand_region_shrink)
 
-" 多光标选中编辑
-Bundle 'terryma/vim-multiple-cursors'
-let g:multi_cursor_use_default_mapping=0
-" Default mapping
-let g:multi_cursor_next_key='<C-m>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-
+    " 多光标选中编辑
+    Bundle 'terryma/vim-multiple-cursors'
+    let g:multi_cursor_use_default_mapping=0
+    " Default mapping
+    let g:multi_cursor_next_key='<C-m>'
+    let g:multi_cursor_prev_key='<C-p>'
+    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_quit_key='<Esc>'
+endif
 "################### 功能相关 ###################
 
 " 文件搜索
@@ -793,23 +800,23 @@ let g:ctrlp_extensions = ['funky']
 
 
 " git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
-Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-fugitive'
 " :Gdiff  :Gstatus :Gvsplit
-nnoremap <leader>ge :Gdiff<CR>
+"nnoremap <leader>ge :Gdiff<CR>
 
 " 同git diff,实时展示文件中修改的行
 " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
-Bundle 'airblade/vim-gitgutter'
-let g:gitgutter_enabled = 0
-let g:gitgutter_highlight_lines = 1
-nnoremap <leader>gs :GitGutterToggle<CR>
+"Bundle 'airblade/vim-gitgutter'
+"let g:gitgutter_enabled = 0
+"let g:gitgutter_highlight_lines = 1
+"nnoremap <leader>gs :GitGutterToggle<CR>
 
 " edit history, 可以查看回到某个历史状态
-Bundle 'sjl/gundo.vim'
-nnoremap <leader>h :GundoToggle<CR>
+"Bundle 'sjl/gundo.vim'
+"nnoremap <leader>h :GundoToggle<CR>
 
-Bundle 'YankRing.vim'
-let g:yankring_history_dir = '/tmp'
+"Bundle 'YankRing.vim'
+"let g:yankring_history_dir = '/tmp'
 
 "################### 显示增强 ###################
 
@@ -818,21 +825,18 @@ Bundle 'bling/vim-airline'
 if !exists('g:airline_symbols')
 let g:airline_symbols = {}
 endif
-let g:airline_left_sep = '▶'
-let g:airline_left_alt_sep = '❯'
-let g:airline_right_sep = '◀'
-let g:airline_right_alt_sep = '❮'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
+
+"let g:airline_left_sep = '▶'
+"let g:airline_left_alt_sep = '❯'
+"let g:airline_right_sep = '◀'
+"let g:airline_right_alt_sep = '❮'
+"let g:airline_symbols.linenr = '¶'
+"let g:airline_symbols.branch = '⎇'
 
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
-
-" 分割窗口最大化
-Bundle 'ZoomWin'
-nnoremap <F11> <c-w>o
 
 " 状态栏显示buffer
 Bundle 'bling/vim-bufferline'
@@ -840,32 +844,39 @@ Bundle 'bling/vim-bufferline'
 " 中文帮助
 Bundle 'asins/vimcdoc'
 
-"括号显示增强
-Bundle 'kien/rainbow_parentheses.vim'
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 40
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+" 分割窗口最大化
+"Bundle 'ZoomWin'
+"nnoremap <F11> <c-w>o
+
+let g:isUserainbow = 0
+if g:isUserainbow
+    "括号显示增强
+    Bundle 'kien/rainbow_parentheses.vim'
+    let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['gray',        'RoyalBlue3'],
+        \ ['black',       'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+    let g:rbpt_max = 40
+    let g:rbpt_loadcmd_toggle = 0
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+endif
 
 " 代码缩进
 " https://github.com/nathanaelkane/vim-indent-guides
@@ -881,20 +892,22 @@ au Syntax * RainbowParenthesesLoadBraces
 "################### 显示增强-主题 ###################"
 
 "主题 solarized
-Bundle 'altercation/vim-colors-solarized'
+"Bundle 'altercation/vim-colors-solarized'
 "let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
+"let g:solarized_termtrans=1
+"let g:solarized_contrast="normal"
+"let g:solarized_visibility="normal"
 
 "主题 molokai
-Bundle 'tomasr/molokai'
+"Bundle 'tomasr/molokai'
 "let g:molokai_original = 1
 
 " theme主题
 "set background=dark
 "colorscheme solarized
+
 set t_Co=256
+
 
 "colorscheme molokai
 "colorscheme desert
@@ -950,13 +963,13 @@ let g:tagbar_type_markdown = {
 \ }
 
 "################### Input ###################
-Bundle 'vimim/vimim'
+"Bundle 'vimim/vimim'
 
 
 "################### 代码 ###################
-Bundle 'wesleyche/SrcExpl'
-nmap <F9> :SrcExplToggle<CR>
-Bundle 'std_c.zip'
+"Bundle 'wesleyche/SrcExpl'
+"nmap <F9> :SrcExplToggle<CR>
+"Bundle 'std_c.zip'
 
 "Bundle 'a.vim'
 "Bundle 'Align'
