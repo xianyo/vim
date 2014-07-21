@@ -6,7 +6,7 @@
 
 clone到本地,配置到linux个人目录
 
-        git clone https://github.com/xianyo/k-vim.git ~/.vim
+        git clone https://github.com/xianyo/vim.git ~/.vim
         cd ~/.vim
         ./install.sh setup
 
@@ -80,8 +80,6 @@ clone到本地,配置到linux个人目录
         :BundleClean       remove plugin not in list
 
 2. ####代码自动补全 [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
-
-    必装，强烈推荐(YCM是我目前用到的最好的自动补全插件)
 
     需要编译这个插件(见github文档)
 
@@ -379,10 +377,10 @@ clone到本地,配置到linux个人目录
 
 # VIM TIPS
 
-![vim-cheat-sheet-full.png](tips/pic/vim-cheat-sheet-full.png)
-![vim_keyboard.png](tips/pic/vim_keyboard.png)
-![vim_cheat_sheet_for_programmers.png](tips/pic/vim_cheat_sheet_for_programmers.png)
-![vim_for_programmers.png](tips/pic/vim_for_programmers.png)
+![vim-cheat-sheet-full.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim-cheat-sheet-full.png?raw=true)
+![vim_keyboard.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim_keyboard.png?raw=true)
+![vim_cheat_sheet_for_programmers.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim_cheat_sheet_for_programmers.png?raw=true)
+![vim_for_programmers.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim_for_programmers.png?raw=true)
 
 
 
