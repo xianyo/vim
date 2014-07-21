@@ -131,11 +131,12 @@ set cursorline          " 突出显示当前行
 
 "设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 "好处：误删什么的，如果以前屏幕打开，可以找回
-set t_ti= t_te=
+"set t_ti= t_te=
 
 
 "- 则点击光标不会换,用于复制
-set mouse-=a             " 鼠标暂不启用, 键盘党....
+"set mouse-=a             " 鼠标暂不启用, 键盘党....
+set mouse=a 
 
 " 修复ctrl+m 多光标操作选择的bug，但是改变了ctrl+v进行字符选中时将包含光标下的字符
 "set selection=exclusive
@@ -291,6 +292,9 @@ set formatoptions+=B
 "==========================================
 autocmd! bufwritepost _vimrc source % " vimrc文件修改之后自动加载。 windows。
 autocmd! bufwritepost .vimrc source % " vimrc文件修改之后自动加载。 linux。
+
+"共享剪贴板  
+set clipboard+=unnamed
 
 " 自动补全配置
 "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
@@ -482,8 +486,8 @@ map <C-l> <C-W>l
 nnoremap ; :
 
 " 进入搜索Use sane regexes"
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
 "Keep search pattern at the center of the screen."
 nnoremap <silent> n nzz
@@ -527,7 +531,7 @@ nnoremap <leader>v V`}
 cmap w!! w !sudo tee >/dev/null %
 
 " kj 替换 Esc
-inoremap kj <Esc>
+"inoremap kj <Esc>
 
 " 滚动Speed up scrolling of the viewport slightly
 nnoremap <C-e> 2<C-e>
@@ -907,7 +911,7 @@ endif
 "colorscheme solarized
 
 set t_Co=256
-
+autocmd InsertEnter * se cul
 
 "colorscheme molokai
 "colorscheme desert
@@ -964,7 +968,12 @@ let g:tagbar_type_markdown = {
 
 "################### Input ###################
 "Bundle 'vimim/vimim'
-
+"输入法
+":let g:vimim_map='c-/'
+":let g:vimim_cloud='sougou' " QQ云输入
+":let g:vimim_punctuation=0	" 不用中文标点
+":set pastetoggle=<C-H>
+":let g:vimim_cloud=-1
 
 "################### 代码 ###################
 "Bundle 'wesleyche/SrcExpl'
