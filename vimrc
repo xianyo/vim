@@ -656,12 +656,12 @@ Bundle 'gmarik/vundle'
 "################### 基础 ######################
 
 " 多语言语法检查
-Bundle 'scrooloose/syntastic'
-let g:syntastic_error_symbol='>>'
-let g:syntastic_warning_symbol='>'
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_highlighting = 0
-highlight SyntasticErrorSign guifg=white guibg=black
+"Bundle 'scrooloose/syntastic'
+"let g:syntastic_error_symbol='>>'
+"let g:syntastic_warning_symbol='>'
+"let g:syntastic_check_on_open=1
+"let g:syntastic_enable_highlighting = 0
+"highlight SyntasticErrorSign guifg=white guibg=black
 
 
 "################### 自动补全 ###################
