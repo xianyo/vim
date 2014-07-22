@@ -56,13 +56,14 @@ vim xianyovim +BundleInstall! +BundleClean +qall
 rm xianyovim
 export SHELL=$system_shell
 
-
+if [ "steup" = "$0" ]; then
 echo "Step4: compile YouCompleteMe"
 echo "It will take a long time, just be patient!"
 echo "If error,you need to compile it yourself"
 echo "cd $CURRENT_DIR/bundle/YouCompleteMe/ && bash -x install.sh --clang-completer"
 cd $CURRENT_DIR/bundle/YouCompleteMe/
 bash -x install.sh --clang-completer
+fi
 
 #vim bk and undo dir
 if [ ! -d /tmp/vimbk ]
