@@ -119,7 +119,7 @@ set noswapfile
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 if v:version >= 730
-    set undofile                " keep a persistent backup file
+        set undofile                " keep a persistent backup file
     set undodir=/tmp/vimundo/
 endif
 
@@ -247,11 +247,11 @@ au FocusGained * :set relativenumber
 autocmd InsertEnter * :set norelativenumber number
 autocmd InsertLeave * :set relativenumber
 function! NumberToggle()
-  if(&relativenumber == 1)
-    set norelativenumber number
-  else
-    set relativenumber
-  endif
+    if(&relativenumber == 1)
+        set norelativenumber number
+    else
+        set relativenumber
+    endif
 endfunc
 nnoremap <C-n> :call NumberToggle()<cr>
 
@@ -318,7 +318,7 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " if this not work ,make sure .viminfo is writable for you
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " 自动切换目录为当前编辑文件所在目录
@@ -335,7 +335,7 @@ if has("cscope")
     "在当前目录中添加任何数据库
     if filereadable("cscope.out")
         cs add cscope.out
-    "否则添加数据库环境中所指出的
+        "否则添加数据库环境中所指出的
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB
     endif
@@ -389,22 +389,22 @@ noremap <F1> <Esc>"
 
 ""为方便复制，用<F2>开启/关闭行号显示:
 function! HideNumber()
-  if(&relativenumber == &number)
-    set relativenumber! number!
-  elseif(&number)
-    set number!
-  else
-    set relativenumber!
-  endif
-  set number?
+    if(&relativenumber == &number)
+        set relativenumber! number!
+    elseif(&number)
+        set number!
+    else
+        set relativenumber!
+    endif
+    set number?
 endfunc
 nnoremap <F2> :call HideNumber()<CR>
 nnoremap <F3> :NERDTreeToggle<CR>
 nnoremap <F4> :TagbarToggle<CR>
 "set paste
 set pastetoggle=<F5>            "    when in insert mode, press <F5> to go to
-                                "    paste mode, where you can paste mass data
-                                "    that won't be autoindented
+"    paste mode, where you can paste mass data
+"    that won't be autoindented
 
 " disbale paste mode when leaving insert mode
 au InsertLeave * set nopaste
@@ -441,36 +441,36 @@ endfunc
 "C，C++ 按F7编译运行
 map <F7> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'java' 
-		exec "!javac %" 
-		exec "!time java %<"
-	elseif &filetype == 'sh'
-		:!time bash %
-	elseif &filetype == 'python'
-		exec "!time python2.7 %"
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java' 
+        exec "!javac %" 
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python2.7 %"
     elseif &filetype == 'html'
         exec "!firefox % &"
     elseif &filetype == 'go'
-"        exec "!go build %<"
+        "        exec "!go build %<"
         exec "!time go run %"
     elseif &filetype == 'mkd'
         exec "!~/.vim/tools/markdown.pl % > %.html &"
         exec "!firefox %.html &"
-	endif
+    endif
 endfunc
 "C,C++的调试
 map <F8> :call Rungdb()<CR>
 func! Rungdb()
-	exec "w"
-	exec "!g++ % -g -o %<"
-	exec "!gdb ./%<"
+    exec "w"
+    exec "!g++ % -g -o %<"
+    exec "!gdb ./%<"
 endfunc
 
 
@@ -479,7 +479,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-
 
 "Map ; to : and save a million keystrokes
 " ex mode commands made easy 用于快速进入命令行
@@ -555,9 +554,9 @@ autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 " 保存python文件时删除多余空格
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 
@@ -596,16 +595,16 @@ if has("gui_running")
     set noimd
     set t_Co=256
     map <silent> <c-F11> :if &guioptions =~# 'm' <Bar>
-        \set guioptions-=m <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=r <Bar>
-        \set guioptions-=L <Bar>
-    \else <Bar>
-        \set guioptions+=m <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=r <Bar>
-        \set guioptions+=L <Bar>
-    \endif<CR>
+                \set guioptions-=m <Bar>
+                \set guioptions-=T <Bar>
+                \set guioptions-=r <Bar>
+                \set guioptions-=L <Bar>
+                \else <Bar>
+                \set guioptions+=m <Bar>
+                \set guioptions+=T <Bar>
+                \set guioptions+=r <Bar>
+                \set guioptions+=L <Bar>
+                \endif<CR>
 endif
 
 "设置标记一列的背景颜色和数字一行颜色一致
@@ -701,10 +700,10 @@ if g:isUseYouCompleteMe
     let g:ycm_key_invoke_completion = '<C-Space>'
     " 黑名单,不启用
     let g:ycm_filetype_blacklist = {
-          \ 'tagbar' : 1,
-          \ 'gitcommit' : 1,
-          \}
-      
+                \ 'tagbar' : 1,
+                \ 'gitcommit' : 1,
+                \}
+
 endif
 
 " 代码片段快速插入
@@ -721,7 +720,7 @@ let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
 "################### 快速编码 ###################
 
 " 快速注释
-"Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdcommenter'
 
 
 " 快速加入修改环绕字符
@@ -746,18 +745,18 @@ endif
 "################### 快速移动 ###################
 
 "更高效的移动 [,, + w/fx]
-"Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-easymotion'
 
 
 " 显示marks - 方便自己进行标记和跳转
 " m[a-zA-Z] add mark
 " '[a-zA-Z] go to mark
 " m<Space>  del all marks
-"Bundle "kshenoy/vim-signature"
+Bundle "kshenoy/vim-signature"
 
 
 "################### 快速选中 ###################
-let g:isUseterryma = 0
+let g:isUseterryma = 1
 if g:isUseterryma
     " 选中区块
     Bundle 'terryma/vim-expand-region'
@@ -782,9 +781,9 @@ let g:ctrlp_cmd = 'CtrlP'
 map <leader>f :CtrlPMRU<CR>
 "set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux"
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz)$',
-    \ }
+            \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+            \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz)$',
+            \ }
 "\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_match_window_bottom=1
@@ -827,7 +826,7 @@ let g:ctrlp_extensions = ['funky']
 " 新的airline配置
 Bundle 'bling/vim-airline'
 if !exists('g:airline_symbols')
-let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 
 "let g:airline_left_sep = '▶'
@@ -838,10 +837,20 @@ endif
 "let g:airline_symbols.branch = '⎇'
 
 let g:airline#extensions#bufferline#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
+"let g:airline#extensions#branch#enabled = 1
+"let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
-
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_theme = 'badwolf'
+let g:airline_theme_patch_func = 'AirlineThemePatch'
+function! AirlineThemePatch(palette)
+if g:airline_theme == 'badwolf'
+  for colors in values(a:palette.inactive)
+    let colors[3] = 245
+  endfor
+endif
+endfunction
+  
 " 状态栏显示buffer
 Bundle 'bling/vim-bufferline'
 
@@ -857,23 +866,23 @@ if g:isUserainbow
     "括号显示增强
     Bundle 'kien/rainbow_parentheses.vim'
     let g:rbpt_colorpairs = [
-        \ ['brown',       'RoyalBlue3'],
-        \ ['Darkblue',    'SeaGreen3'],
-        \ ['darkgray',    'DarkOrchid3'],
-        \ ['darkgreen',   'firebrick3'],
-        \ ['darkcyan',    'RoyalBlue3'],
-        \ ['darkred',     'SeaGreen3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['brown',       'firebrick3'],
-        \ ['gray',        'RoyalBlue3'],
-        \ ['black',       'SeaGreen3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['Darkblue',    'firebrick3'],
-        \ ['darkgreen',   'RoyalBlue3'],
-        \ ['darkcyan',    'SeaGreen3'],
-        \ ['darkred',     'DarkOrchid3'],
-        \ ['red',         'firebrick3'],
-        \ ]
+                \ ['brown',       'RoyalBlue3'],
+                \ ['Darkblue',    'SeaGreen3'],
+                \ ['darkgray',    'DarkOrchid3'],
+                \ ['darkgreen',   'firebrick3'],
+                \ ['darkcyan',    'RoyalBlue3'],
+                \ ['darkred',     'SeaGreen3'],
+                \ ['darkmagenta', 'DarkOrchid3'],
+                \ ['brown',       'firebrick3'],
+                \ ['gray',        'RoyalBlue3'],
+                \ ['black',       'SeaGreen3'],
+                \ ['darkmagenta', 'DarkOrchid3'],
+                \ ['Darkblue',    'firebrick3'],
+                \ ['darkgreen',   'RoyalBlue3'],
+                \ ['darkcyan',    'SeaGreen3'],
+                \ ['darkred',     'DarkOrchid3'],
+                \ ['red',         'firebrick3'],
+                \ ]
     let g:rbpt_max = 40
     let g:rbpt_loadcmd_toggle = 0
     au VimEnter * RainbowParenthesesToggle
@@ -896,26 +905,26 @@ endif
 "################### 显示增强-主题 ###################"
 
 "主题 solarized
-"Bundle 'altercation/vim-colors-solarized'
-"let g:solarized_termcolors=256
+Bundle 'altercation/vim-colors-solarized'
+let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
-"let g:solarized_contrast="normal"
-"let g:solarized_visibility="normal"
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
 
 "主题 molokai
 "Bundle 'tomasr/molokai'
 "let g:molokai_original = 1
 
 " theme主题
-"set background=dark
-"colorscheme solarized
+set background=dark "light
+colorscheme solarized
 
 set t_Co=256
 autocmd InsertEnter * se cul
 
 "colorscheme molokai
 "colorscheme desert
-colorscheme ron
+"colorscheme ron
 
 "################### 快速导航 ###################
 "目录导航
@@ -952,19 +961,19 @@ let g:tagbar_autofocus = 1
 
 " markdown
 let g:tagbar_type_markdown = {
-    \ 'ctagstype': 'markdown',
-    \ 'ctagsbin' : '~/.vim/tools/markdown2ctags.py',
-    \ 'ctagsargs' : '-f - --sort=yes',
-    \ 'kinds' : [
-        \ 's:sections',
-        \ 'i:images'
-    \ ],
-    \ 'sro' : '|',
-    \ 'kind2scope' : {
-        \ 's' : 'section',
-    \ },
-    \ 'sort': 0,
-\ }
+            \ 'ctagstype': 'markdown',
+            \ 'ctagsbin' : '~/.vim/tools/markdown2ctags.py',
+            \ 'ctagsargs' : '-f - --sort=yes',
+            \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+            \ ],
+            \ 'sro' : '|',
+            \ 'kind2scope' : {
+            \ 's' : 'section',
+            \ },
+            \ 'sort': 0,
+            \ }
 
 "################### Input ###################
 "Bundle 'vimim/vimim'
