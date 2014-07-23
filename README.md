@@ -6,7 +6,7 @@
 
 clone到本地,配置到linux个人目录
 
-    git clone https://github.com/xianyo/vim.git ~/.vim                                                               
+    git clone https://github.com/xianyo/vim.git ~/.vim
     cd ~/.vim               
     ./install.sh setup
  
@@ -16,20 +16,7 @@ clone到本地,配置到linux个人目录
 
 #### 修改的快捷键和插件快捷键
 
-    1. 可以自己修改vimrc中配置，决定是否开启鼠标
-
-    set mouse-=a           " 鼠标暂不启用, 键盘党....
-    set mouse=a            " 开启鼠标
-
-    2. 可以自己修改vimrc决定是否使用方向键进行上下左右移动，默认打开，可以注解
-    hjkl  上下左右
-
-    map <Left> <Nop>
-    map <Right> <Nop>
-    map <Up> <Nop>
-    map <Down> <Nop>
-
-    3. 上排F功能键
+    1. 上排F功能键
 
     F1 废弃这个键,防止调出系统帮助
     F2 set nu/nonu,行号开关，用于鼠标复制代码用
@@ -44,14 +31,14 @@ clone到本地,配置到linux个人目录
     F11 分割窗口最大化
     F12 vimshell
 
-    4. 分屏移动
+    2. 分屏移动
 
     ctrl + jkhl 进行上下左右窗口跳转,不需要ctrl+w+jkhl
 
-    5. 搜索
+    3. 搜索
     ,/      去除匹配高亮
 
-    6. buffer/tab相关
+    4. buffer/tab相关
     <- / -> 前后buffer
 
     , + tn  新tab
@@ -60,11 +47,10 @@ clone到本地,配置到linux个人目录
     , + tm  tab move
     , + te  new tab edit
 
-    7. 按键修改
+    5. 按键修改
     ; 修改成 : ，一键进入命令行模式，不需要按shift
     , + sa    select all,全选
     , + v     选中段落
-    kj        代替<Esc>，不用到角落去按esc了
     , + q     :q，退出vim
 
 
