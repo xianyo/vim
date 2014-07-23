@@ -6,9 +6,9 @@
 
 clone到本地,配置到linux个人目录
 
-        git clone https://github.com/xianyo/vim.git ~/.vim                                                                    
-        cd ~/.vim               
-        ./install.sh setup
+    git clone https://github.com/xianyo/vim.git ~/.vim                                                               
+    cd ~/.vim               
+    ./install.sh setup
  
 
  
@@ -378,10 +378,10 @@ clone到本地,配置到linux个人目录
 
 ### VIM TIPS
 
-![vim-cheat-sheet-full.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim-cheat-sheet-full.png?raw=true)
-![vim_keyboard.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim_keyboard.png?raw=true)
-![vim_cheat_sheet_for_programmers.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim_cheat_sheet_for_programmers.png?raw=true)
-![vim_for_programmers.png](https://raw.githubusercontent.com/xianyo/k-vim/master/tips/pic/vim_for_programmers.png?raw=true)
+![vim-cheat-sheet-full.png](https://raw.githubusercontent.com/xianyo/vim/master/tips/pic/vim-cheat-sheet-full.png?raw=true)
+![vim_keyboard.png](https://raw.githubusercontent.com/xianyo/vim/master/tips/pic/vim_keyboard.png?raw=true)
+![vim_cheat_sheet_for_programmers.png](https://raw.githubusercontent.com/xianyo/vim/master/tips/pic/vim_cheat_sheet_for_programmers.png?raw=true)
+![vim_for_programmers.png](https://raw.githubusercontent.com/xianyo/vim/master/tips/pic/vim_for_programmers.png?raw=true)
 
 
 
