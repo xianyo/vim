@@ -504,6 +504,7 @@ noremap <silent><leader>/ :nohls<CR>
 "Use arrow key to change buffer"
 noremap <left> :bp<CR>
 noremap <right> :bn<CR>
+nnoremap <TAB> :tabnext<CR>
 
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
@@ -836,7 +837,11 @@ endif
 "let g:airline_symbols.linenr = '¶'
 "let g:airline_symbols.branch = '⎇'
 
-let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers= 1
+let g:airline#extensions#tabline#tab_min_count = 2
+let g:airline#extensions#tabline#buffer_min_count = 2
+"let g:airline#extensions#bufferline#enabled = 1
 "let g:airline#extensions#branch#enabled = 1
 "let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
@@ -852,7 +857,7 @@ endif
 endfunction
   
 " 状态栏显示buffer
-Bundle 'bling/vim-bufferline'
+"Bundle 'bling/vim-bufferline'
 
 " 中文帮助
 Bundle 'asins/vimcdoc'
@@ -949,10 +954,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 "let g:miniBufExplCycleArround=1
 
 " 默认方向键左右可以切换buffer
-nnoremap <TAB> :MBEbn<CR>
-noremap <leader>bn :MBEbn<CR>
-noremap <leader>bp :MBEbp<CR>
-noremap <leader>bd :MBEbd<CR>
+"nnoremap <TAB> :MBEbn<CR>
+"noremap <leader>bn :MBEbn<CR>
+"noremap <leader>bp :MBEbp<CR>
+"noremap <leader>bd :MBEbd<CR>
 
 "标签导航
 Bundle 'majutsushi/tagbar'
