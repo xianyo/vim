@@ -16,7 +16,7 @@ clone到本地,配置到linux个人目录
 
 #### 修改的快捷键和插件快捷键
 
-    1. 上排F功能键
+    <leader>  ;
 
     F1 废弃这个键,防止调出系统帮助
     F2 set nu/nonu,行号开关，用于鼠标复制代码用
@@ -31,27 +31,20 @@ clone到本地,配置到linux个人目录
     F11 分割窗口最大化
     F12 vimshell
 
-    2. 分屏移动
-
     ctrl + jkhl 进行上下左右窗口跳转,不需要ctrl+w+jkhl
+    ;/      去除匹配高亮
 
-    3. 搜索
-    ,/      去除匹配高亮
-
-    4. buffer/tab相关
     <- / -> 前后buffer
+    ; + tn  新tab
+    ; + to  tabonly
+    ; + tc  close
+    ; + tm  tab move
+    ; + te  new tab edit
+    ; + sa    select all,全选
+    ; + v     选中段落
+    ; + w     :w，保存
+    ; + q     :q!，退出vim
 
-    , + tn  新tab
-    , + to  tabonly
-    , + tc  close
-    , + tm  tab move
-    , + te  new tab edit
-
-    5. 按键修改
-    ; 修改成 : ，一键进入命令行模式，不需要按shift
-    , + sa    select all,全选
-    , + v     选中段落
-    , + q     :q，退出vim
 
 
 ### 插件
@@ -84,7 +77,7 @@ clone到本地,配置到linux个人目录
 
     快捷键:
 
-        ,gd  跳到声明位置, 仅 filetypes: c, cpp, objc, objcpp, python 有效
+        ;gd  跳到声明位置, 仅 filetypes: c, cpp, objc, objcpp, python 有效
 
 
 3. ####代码片段快速插入 [SirVer/ultisnips](https://github.com/SirVer/ultisnips) +[honza/vim-snippets](https://github.com/honza/vim-snippets)
@@ -154,8 +147,8 @@ clone到本地,配置到linux个人目录
 
     文件搜索,ack/Command-T需要依赖于外部包,不喜欢有太多依赖的,除非十分强大, 具体 [文档](http://kien.github.io/ctrlp.vim/)
 
-        [sd] ,p  打开ctrlp搜索
-        [sd] ,f  相当于mru功能，show recently opened files
+        [sd] ;p  打开ctrlp搜索
+        [sd] ;f  相当于mru功能，show recently opened files
 
         ctrl + j/k 进行上下移动
         ctrl + x/v 分屏打开该文件
@@ -170,8 +163,8 @@ clone到本地,配置到linux个人目录
 
     解决问题:使用tagbar当函数比较多的时候,移动耗时较长,使用快速搜索快很多
 
-        ,fu   进入当前文件函数搜索
-        ,fU   搜索光标下单词对应函数
+        ;fu   进入当前文件函数搜索
+        ;fuu   搜索光标下单词对应函数
 
 
 11. ####目录树 [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
@@ -179,7 +172,7 @@ clone到本地,配置到linux个人目录
     必装,开启目录树导航
 
         [sd]
-            ,n  打开 关闭树形目录结构 或者F3
+            ;n  打开 关闭树形目录结构 或者F3
 
             在nerdtree窗口常用操作：(小写当前，大写root)
             x.......收起当前目录树
@@ -209,8 +202,8 @@ clone到本地,配置到linux个人目录
     必装，另一个大大提升效率的地方，快速批量加减注释
 
         [d] shift+v+方向键选中(默认当前行)
-            ->  ,cc  加上注释
-            -> ,cu 解开注释
+            -> ;cc  加上注释
+            -> ;cu 解开注释
 
     演示
 
@@ -252,7 +245,7 @@ clone到本地,配置到linux个人目录
     不是很习惯,所以用的次数太少,目前和现有配置快捷键有冲突,尚未解决
 
         [sd]
-        ,ge   = git diff edit[gd被ycm占用了]
+        ;ge   = git diff edit[gd被ycm占用了]
 
     没有配置其他快捷键,可以参照github,自己增加修改映射
 
@@ -261,7 +254,7 @@ clone到本地,配置到linux个人目录
     git,在同一个文件内,通过标记和高亮,显示本次文件变更点
 
         [sd]
-        ,gs   = show diff status [gd被ycm占用了]
+        ;gs   = show diff status [gd被ycm占用了]
 
     ![gitgutter](https://raw.githubusercontent.com/airblade/vim-gitgutter/master/screenshot.png)
     
@@ -269,10 +262,10 @@ clone到本地,配置到linux个人目录
 
     必装，效率提升杀手锏，跳转到光标后任意位置
 
-    配置(我的leader键配置 let g:mapleader = ',')
+    配置(我的leader键配置 let g:mapleader = ';')
 
-        ,, + w  跳转
-        ,, + fe  查找'e',快速跳转定位到某个字符位置
+        ;; + w  跳转
+        ;; + fe  查找'e',快速跳转定位到某个字符位置
 
     演示
 
@@ -303,18 +296,22 @@ clone到本地,配置到linux个人目录
     将代码,或者json等,进行对齐,具体见 [tabular-vim](http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
 
         [sd]  可以选中多行,不选中默认操作当前行
-            ,a= 对齐等号表达式
-            ,a: 对齐冒号表达式(json/map等)
+            ;a= 对齐等号表达式
+            ;a: 对齐冒号表达式(json/map等)
 
 
 20. ####mark跳转 [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)
 
+        显示marks - 方便自己进行标记和跳转
+        m[a-zA-Z] add mark
+        '[a-zA-Z] go to mark
+        m<Space>  del all marks
 
 21. ####文件时光机 [sjl/gundo.vim](https://github.com/sjl/gundo.vim)
 
     编辑文件时光机
 
-        [sd] ,h  查看文件编辑历史
+        [sd] ;h  查看文件编辑历史
 
     附:同类插件 [mbbill/undotree](https://github.com/mbbill/undotree)
 
@@ -345,9 +342,9 @@ clone到本地,配置到linux个人目录
         [sd]
             <Tab>  切换buffer
             左右方向键  切换buffer
-            ,bn   切到后一个
-            ,bp   切到前一个
-            ,bd   关闭当前buffer
+            ;bn   切到后一个
+            ;bp   切到前一个
+            ;bd   关闭当前buffer
 
 26. ####YankRing [YankRing.vim](http://www.vim.org/scripts/script.php?script_id=1234)
 

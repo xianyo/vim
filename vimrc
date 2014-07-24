@@ -83,8 +83,8 @@ endif
 "以下配置有详细说明，一些特性不喜欢可以直接注解掉
 
 " 修改leader键
-let mapleader = ','
-let g:mapleader = ','
+let mapleader = ';'
+let g:mapleader = ';'
 
 "set guifont=Monaco:h20          " 字体 && 字号
 
@@ -480,9 +480,9 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-"Map ; to : and save a million keystrokes
+"Map ' to : and save a million keystrokes
 " ex mode commands made easy 用于快速进入命令行
-nnoremap ; :
+"nnoremap ' :
 
 " 进入搜索Use sane regexes"
 "nnoremap / /\v
@@ -527,9 +527,6 @@ map <Leader>sa ggVG"
 " select block
 nnoremap <leader>v V`}
 
-" w!! to sudo & write a file
-cmap w!! w !sudo tee >/dev/null %
-
 " kj 替换 Esc
 "inoremap kj <Esc>
 
@@ -539,7 +536,9 @@ nnoremap <C-y> 2<C-y>
 
 
 " Quickly close the current window
-nnoremap <leader>q :q<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>wq :wq<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -686,16 +685,6 @@ if g:isUseYouCompleteMe
     let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
     "let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
     let g:ycm_collect_identifiers_from_tags_files = 1
-    " 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-    " old version
-    if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
-    endif
-    " new version
-    if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-        let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-    endif
-
 
     " 直接触发自动补全
     let g:ycm_key_invoke_completion = '<C-Space>'
@@ -713,7 +702,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" 定义存放代码片段的文件夹 .vim/snippets下，使用自定义和默认的，将会的到全局，有冲突的会提示
+" 定义存放代码片段的文件夹 .vim/my_snippets下，使用自定义和默认的，将会的到全局，有冲突的会提示
 let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
 
 
@@ -745,7 +734,7 @@ endif
 
 "################### 快速移动 ###################
 
-"更高效的移动 [,, + w/fx]
+"更高效的移动 [;; + w/fx]
 Bundle 'Lokaltog/vim-easymotion'
 
 
@@ -797,7 +786,7 @@ let g:ctrlp_follow_symlinks=1
 Bundle 'tacahiroy/ctrlp-funky'
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+nnoremap <Leader>fuu :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_syntax_highlight = 1
 
 let g:ctrlp_extensions = ['funky']
@@ -809,7 +798,7 @@ let g:ctrlp_extensions = ['funky']
 "nnoremap <leader>ge :Gdiff<CR>
 
 " 同git diff,实时展示文件中修改的行
-" 只是不喜欢除了行号多一列, 默认关闭,gs时打开
+" 只是不喜欢除了行号多一列, 默认关闭;gs时打开
 "Bundle 'airblade/vim-gitgutter'
 "let g:gitgutter_enabled = 0
 "let g:gitgutter_highlight_lines = 1
