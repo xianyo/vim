@@ -900,10 +900,19 @@ endif
 
 "主题 solarized
 Bundle 'altercation/vim-colors-solarized'
+" .bashrc  --> export TERM=xterm-256color
 let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
+
+"Bundle 'chriskempson/vim-tomorrow-theme'
+
+"colorscheme Tomorrow
+"colorscheme Tomorrow-Night
+"colorscheme Tomorrow-Blue
+"colorscheme Tomorrow-Night-Bright
+"colorscheme Tomorrow-Night-Eighties
 
 "主题 molokai
 "Bundle 'tomasr/molokai'
@@ -913,8 +922,8 @@ let g:solarized_visibility="normal"
 set background=dark "light
 colorscheme solarized
 
-set t_Co=256
-autocmd InsertEnter * se cul
+"set t_Co=256
+"autocmd InsertEnter * se cul
 
 "colorscheme molokai
 "colorscheme desert
