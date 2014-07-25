@@ -830,6 +830,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers= 1
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:airline#extensions#bufferline#enabled = 1
 "let g:airline#extensions#branch#enabled = 1
 "let g:airline#extensions#syntastic#enabled = 1
@@ -902,7 +904,7 @@ endif
 Bundle 'altercation/vim-colors-solarized'
 " .bashrc  --> export TERM=xterm-256color
 let g:solarized_termcolors=256
-"let g:solarized_termtrans=1
+let g:solarized_termtrans=1
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
 
