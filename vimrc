@@ -904,7 +904,7 @@ endif
 Bundle 'altercation/vim-colors-solarized'
 " .bashrc  --> export TERM=xterm-256color
 let g:solarized_termcolors=256
-let g:solarized_termtrans=1
+"let g:solarized_termtrans=1
 let g:solarized_contrast="normal"
 let g:solarized_visibility="normal"
 
