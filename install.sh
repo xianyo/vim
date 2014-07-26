@@ -3,15 +3,15 @@
 if [ "steup" = "$0" ]; then
 echo "Step0: Installing packages"
 if which apt-get >/dev/null; then
-	sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools python-dev git cscope Cmake
+	sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools python-dev git cscope Cmake global
 elif which yum >/dev/null; then
-	sudo yum install -y gcc vim git ctags xclip astyle python-setuptools python-devel cscope Cmake
+	sudo yum install -y gcc vim git ctags xclip astyle python-setuptools python-devel cscope Cmake global
 fi
 
 ##Add HomeBrew support on  Mac OS
 if which brew >/dev/null;then
     echo "You are using HomeBrew tool"
-    brew install vim ctags git astyle cscope
+    brew install vim ctags git astyle cscope global
     ##Fix twisted installation Error in Mac caused by Xcode Version limit
     sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future easy_install twisted
 fi

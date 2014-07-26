@@ -345,90 +345,6 @@ function! <SID>BufcloseCloseIt()
     endif
 endfunction
 
-" 更新ctags和cscope索引
-" href: http://www.vimer.cn/2009/10/把vim打造成一个真正的ide2.html
-" 稍作修改，提取出DeleteFile函数，修改ctags和cscope执行命令
-map <F10> :call Do_CsTag()<cr>
-function! Do_CsTag()
-    let dir = getcwd()
- 
-    "先删除已有的tags和cscope文件，如果存在且无法删除，则报错。
-    if ( DeleteFile(dir, "tags") ) 
-        return 
-    endif
-    if ( DeleteFile(dir, "cscope.files") ) 
-        return 
-    endif
-    if ( DeleteFile(dir, "cscope.out") ) 
-        return 
-    endif
- 
-    if(executable('ctags'))
-        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-    endif
-    if(executable('cscope') && has("cscope") )
-        if(g:iswindows)
-            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-        else
-            silent! execute "!find . -iname '*.[ch]' -o -name '*.cpp' > cscope.files"
-        endif
-        silent! execute "!cscope -b"
-        execute "normal :"
-        if filereadable("cscope.out")
-            execute "cs add cscope.out"
-        endif
-    endif
-    " 刷新屏幕
-    execute "redr!"
-endfunction
- 
-function! DeleteFile(dir, filename)
-    if filereadable(a:filename)
-        if (g:iswindows)
-            let ret = delete(a:dir."\\".a:filename)
-        else
-            let ret = delete("./".a:filename)
-        endif
-        if (ret != 0)
-            echohl WarningMsg | echo "Failed to delete ".a:filename | echohl None
-            return 1
-        else
-            return 0
-        endif
-    endif
-    return 0
-endfunction
-
-" 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
-if has("cscope")
-    "设定可以使用 quickfix 窗口来查看 cscope 结果
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
-    set cscopetag
-    "如果你想反向搜索顺序设置为1
-    set csto=0
-    "在当前目录中添加任何数据库
-    if filereadable("cscope.out")
-        cs add cscope.out
-        "否则添加数据库环境中所指出的
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
-    set cscopeverbose
-    "快捷键设置
-    " s: C语言符号  g: 定义     d: 这个函数调用的函数 c: 调用这个函数的函数
-    " t: 文本       e: egrep模式    f: 文件     i: include本文件的文件
-    nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
-endif
-
-set tags=./tags;
 
 "==========================================
 " HotKey Settings  自定义快捷键设置
@@ -841,6 +757,100 @@ if g:isUseterryma
     let g:multi_cursor_skip_key='<C-x>'
     let g:multi_cursor_quit_key='<Esc>'
 endif
+
+
+" 更新ctags和cscope索引
+" href: http://www.vimer.cn/2009/10/把vim打造成一个真正的ide2.html
+"map <F10> :call Do_CsTag()<cr>
+" use plugin cscope_utils.vim
+function Do_CsTag()
+    let dir = getcwd()
+    if filereadable("tags")
+        if(g:iswindows==1)
+            let tagsdeleted=delete(dir."\\"."tags")
+        else
+            let tagsdeleted=delete("./"."tags")
+        endif
+        if(tagsdeleted!=0)
+            echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
+            return
+        endif
+    endif
+    if has("cscope")
+        silent! execute "cs kill -1"
+    endif
+    if filereadable("cscope.files")
+        if(g:iswindows==1)
+            let csfilesdeleted=delete(dir."\\"."cscope.files")
+        else
+            let csfilesdeleted=delete("./"."cscope.files")
+        endif
+        if(csfilesdeleted!=0)
+            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
+            return
+        endif
+    endif
+    if filereadable("cscope.out")
+        if(g:iswindows==1)
+            let csoutdeleted=delete(dir."\\"."cscope.out")
+        else
+            let csoutdeleted=delete("./"."cscope.out")
+        endif
+        if(csoutdeleted!=0)
+            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
+            return
+        endif
+    endif
+    if(executable('ctags'))
+        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
+        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+    endif
+    if(executable('cscope') && has("cscope") )
+        if(g:iswindows!=1)
+            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+        else
+            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
+        endif
+        silent! execute "!cscope -b"
+        execute "normal :"
+        if filereadable("cscope.out")
+            execute "cs add cscope.out"
+        endif
+    endif
+    " 刷新屏幕
+    execute "redr!"
+endfunction
+
+" 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
+if has("cscope")
+    "设定可以使用 quickfix 窗口来查看 cscope 结果
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+    set cscopetag
+    "如果你想反向搜索顺序设置为1
+    set csto=0
+    "在当前目录中添加任何数据库
+    if filereadable("cscope.out")
+        cs add cscope.out
+        "否则添加数据库环境中所指出的
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    "set cscopeverbose
+    "快捷键设置
+    " s: C语言符号  g: 定义     d: 这个函数调用的函数 c: 调用这个函数的函数
+    " t: 文本       e: egrep模式    f: 文件     i: include本文件的文件
+    nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+
+
 "################### 功能相关 ###################
 
 " 文件搜索
