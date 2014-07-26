@@ -324,6 +324,81 @@ endif
 " 自动切换目录为当前编辑文件所在目录
 au BufRead,BufNewFile,BufEnter * cd %:p:h
 
+" 删除buffer时不关闭窗口
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+ 
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
+ 
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+ 
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
+    endif
+endfunction
+
+" 更新ctags和cscope索引
+" href: http://www.vimer.cn/2009/10/把vim打造成一个真正的ide2.html
+" 稍作修改，提取出DeleteFile函数，修改ctags和cscope执行命令
+map <F10> :call Do_CsTag()<cr>
+function! Do_CsTag()
+    let dir = getcwd()
+ 
+    "先删除已有的tags和cscope文件，如果存在且无法删除，则报错。
+    if ( DeleteFile(dir, "tags") ) 
+        return 
+    endif
+    if ( DeleteFile(dir, "cscope.files") ) 
+        return 
+    endif
+    if ( DeleteFile(dir, "cscope.out") ) 
+        return 
+    endif
+ 
+    if(executable('ctags'))
+        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+    endif
+    if(executable('cscope') && has("cscope") )
+        if(g:iswindows)
+            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
+        else
+            silent! execute "!find . -iname '*.[ch]' -o -name '*.cpp' > cscope.files"
+        endif
+        silent! execute "!cscope -b"
+        execute "normal :"
+        if filereadable("cscope.out")
+            execute "cs add cscope.out"
+        endif
+    endif
+    " 刷新屏幕
+    execute "redr!"
+endfunction
+ 
+function! DeleteFile(dir, filename)
+    if filereadable(a:filename)
+        if (g:iswindows)
+            let ret = delete(a:dir."\\".a:filename)
+        else
+            let ret = delete("./".a:filename)
+        endif
+        if (ret != 0)
+            echohl WarningMsg | echo "Failed to delete ".a:filename | echohl None
+            return 1
+        else
+            return 0
+        endif
+    endif
+    return 0
+endfunction
+
 " 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
 if has("cscope")
     "设定可以使用 quickfix 窗口来查看 cscope 结果
@@ -341,15 +416,19 @@ if has("cscope")
     endif
     set cscopeverbose
     "快捷键设置
-    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+    " s: C语言符号  g: 定义     d: 这个函数调用的函数 c: 调用这个函数的函数
+    " t: 文本       e: egrep模式    f: 文件     i: include本文件的文件
+    nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
+
+set tags=./tags;
 
 "==========================================
 " HotKey Settings  自定义快捷键设置
@@ -380,7 +459,7 @@ nnoremap gj j
 " F7 编译运行
 " F8 C,C++的调试
 " F9 代码浏览
-" F10 
+" F10 生成tag 
 " F11 分割窗口最大化
 " F12 vimshell
 
@@ -997,9 +1076,7 @@ let g:tagbar_type_markdown = {
 "Bundle 'a.vim'
 "Bundle 'Align'
 "Bundle 'jiangmiao/auto-pairs'
-"Bundle 'ccvext.vim'
-"nmap <F10> <Leader>sy
-"Bundle 'cSyntaxAfter'
+
 
 "Bundle 'Shougo/vimproc.vim'
 "Bundle 'Shougo/vimshell.vim'
