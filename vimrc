@@ -762,69 +762,6 @@ if g:isUseterryma
     let g:multi_cursor_quit_key='<Esc>'
 endif
 
-
-" 更新ctags和cscope索引
-" href: http://www.vimer.cn/2009/10/把vim打造成一个真正的ide2.html
-"map <F10> :call Do_CsTag()<cr>
-" use plugin cscope_utils.vim
-function Do_CsTag()
-    let dir = getcwd()
-    if filereadable("tags")
-        if(g:iswindows==1)
-            let tagsdeleted=delete(dir."\\"."tags")
-        else
-            let tagsdeleted=delete("./"."tags")
-        endif
-        if(tagsdeleted!=0)
-            echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
-            return
-        endif
-    endif
-    if has("cscope")
-        silent! execute "cs kill -1"
-    endif
-    if filereadable("cscope.files")
-        if(g:iswindows==1)
-            let csfilesdeleted=delete(dir."\\"."cscope.files")
-        else
-            let csfilesdeleted=delete("./"."cscope.files")
-        endif
-        if(csfilesdeleted!=0)
-            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
-            return
-        endif
-    endif
-    if filereadable("cscope.out")
-        if(g:iswindows==1)
-            let csoutdeleted=delete(dir."\\"."cscope.out")
-        else
-            let csoutdeleted=delete("./"."cscope.out")
-        endif
-        if(csoutdeleted!=0)
-            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
-            return
-        endif
-    endif
-    if(executable('ctags'))
-        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
-        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-    endif
-    if(executable('cscope') && has("cscope") )
-        if(g:iswindows!=1)
-            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
-        else
-            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-        endif
-        silent! execute "!cscope -b"
-        execute "normal :"
-        if filereadable("cscope.out")
-            execute "cs add cscope.out"
-        endif
-    endif
-    " 刷新屏幕
-    execute "redr!"
-endfunction
-
 " 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
 if has("cscope")
     "设定可以使用 quickfix 窗口来查看 cscope 结果
@@ -840,7 +777,7 @@ if has("cscope")
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB
     endif
-    "set cscopeverbose
+    set cscopeverbose
     "快捷键设置
     " s: C语言符号  g: 定义     d: 这个函数调用的函数 c: 调用这个函数的函数
     " t: 文本       e: egrep模式    f: 文件     i: include本文件的文件
@@ -1096,7 +1033,14 @@ let g:tagbar_type_markdown = {
 "Bundle 'Shougo/vimshell.vim'
 "nmap <F12> :VimShell<CR>
 
-Bundle 'zhm/TagHighlight'
+Bundle 'xianyo/TagHighlight'
+let g:TagHighlightSettings = { 
+		\'EnableCscope': 1, 
+		\'LanguageDetectionMethods': ['Extension', 'FileType'],
+		\'FileTypeLanguageOverrides': {'tagbar': 'all', 'gitcommit' : 'all'},
+		\}
+
+nmap <F10> :UpdateTypesFile<CR>
 
 "################### 语言相关 ###################
 
