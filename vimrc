@@ -36,6 +36,10 @@ if has("mac") || has("macunix")
     let g:ismac = 1
 endif
 
+if has('win32unix')
+    let g:iscywin = 1	
+endif
+
 
 " 判断是终端还是 Gvim 
 if has("gui_running")
@@ -697,8 +701,8 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" 定义存放代码片段的文件夹 .vim/my_snippets下，使用自定义和默认的，将会的到全局，有冲突的会提示
-let g:UltiSnipsSnippetDirectories=["my_snippets", 'UltiSnips']
+" 定义存放代码片段的文件夹 .vim/ultisnips下，使用自定义和默认的，将会的到全局，有冲突的会提示
+let g:UltiSnipsSnippetDirectories=["ultisnips", 'UltiSnips']
 
 
 
@@ -882,16 +886,16 @@ let g:ctrlp_extensions = ['funky']
 
 
 " git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
-"Bundle 'tpope/vim-fugitive'
-" :Gdiff  :Gstatus :Gvsplit
-"nnoremap <leader>ge :Gdiff<CR>
+Bundle 'tpope/vim-fugitive'
+" :gdiff  :gstatus :gvsplit
+nnoremap <leader>ge :gdiff<cr>
 
 " 同git diff,实时展示文件中修改的行
 " 只是不喜欢除了行号多一列, 默认关闭;gs时打开
-"Bundle 'airblade/vim-gitgutter'
-"let g:gitgutter_enabled = 0
-"let g:gitgutter_highlight_lines = 1
-"nnoremap <leader>gs :GitGutterToggle<CR>
+Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_enabled = 0
+let g:gitgutter_highlight_lines = 1
+nnoremap <leader>gs :GitGutterToggle<CR>
 
 " edit history, 可以查看回到某个历史状态
 "Bundle 'sjl/gundo.vim'
@@ -922,7 +926,7 @@ let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:airline#extensions#bufferline#enabled = 1
-"let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 "let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
@@ -1091,6 +1095,8 @@ let g:tagbar_type_markdown = {
 "Bundle 'Shougo/vimproc.vim'
 "Bundle 'Shougo/vimshell.vim'
 "nmap <F12> :VimShell<CR>
+
+Bundle 'zhm/TagHighlight'
 
 "################### 语言相关 ###################
 
