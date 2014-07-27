@@ -777,7 +777,7 @@ if has("cscope")
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB
     endif
-    set cscopeverbose
+    "set cscopeverbose
     "快捷键设置
     " s: C语言符号  g: 定义     d: 这个函数调用的函数 c: 调用这个函数的函数
     " t: 文本       e: egrep模式    f: 文件     i: include本文件的文件
@@ -1033,14 +1033,18 @@ let g:tagbar_type_markdown = {
 "Bundle 'Shougo/vimshell.vim'
 "nmap <F12> :VimShell<CR>
 
-Bundle 'xianyo/TagHighlight'
-let g:TagHighlightSettings = { 
-		\'EnableCscope': 1, 
-		\'LanguageDetectionMethods': ['Extension', 'FileType'],
-		\'FileTypeLanguageOverrides': {'tagbar': 'all', 'gitcommit' : 'all'},
-		\}
+if !g:iscywin
+	Bundle 'xianyo/TagHighlight'
+	let g:TagHighlightSettings = { 
+			\'EnableCscope': 1, 
+			\'LanguageDetectionMethods': ['Extension', 'FileType'],
+			\'FileTypeLanguageOverrides': {'tagbar': 'all', 'gitcommit' : 'all'},
+			\}
 
-nmap <F10> :UpdateTypesFile<CR>
+	nmap <F10> :UpdateTypesFile<CR>
+else
+	nmap <F10> :BuildCscopeDatabase<CR>
+endif
 
 "################### 语言相关 ###################
 
