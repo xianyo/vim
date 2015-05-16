@@ -829,10 +829,10 @@ let g:ctrlp_extensions = ['funky']
 
 " 同git diff,实时展示文件中修改的行
 " 只是不喜欢除了行号多一列, 默认关闭;gs时打开
-"Bundle 'airblade/vim-gitgutter'
-"let g:gitgutter_enabled = 0
-"let g:gitgutter_highlight_lines = 1
-"nnoremap <leader>gs :GitGutterToggle<CR>
+Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_enabled = 1
+let g:gitgutter_highlight_lines = 0
+nnoremap <leader>gs :GitGutterToggle<CR>
 
 " edit history, 可以查看回到某个历史状态
 "Bundle 'sjl/gundo.vim'
