@@ -734,18 +734,18 @@ endif
 "################### 快速移动 ###################
 
 "更高效的移动 [;; + w/fx]
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion'
 
 
 " 显示marks - 方便自己进行标记和跳转
 " m[a-zA-Z] add mark
 " '[a-zA-Z] go to mark
 " m<Space>  del all marks
-Bundle "kshenoy/vim-signature"
+"Bundle "kshenoy/vim-signature"
 
 
 "################### 快速选中 ###################
-let g:isUseterryma = 1
+let g:isUseterryma = 0
 if g:isUseterryma
     " 选中区块
     Bundle 'terryma/vim-expand-region'
@@ -823,16 +823,16 @@ let g:ctrlp_extensions = ['funky']
 
 
 " git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
-Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-fugitive'
 " :gdiff  :gstatus :gvsplit
-nnoremap <leader>ge :gdiff<cr>
+"nnoremap <leader>ge :gdiff<cr>
 
 " 同git diff,实时展示文件中修改的行
 " 只是不喜欢除了行号多一列, 默认关闭;gs时打开
-Bundle 'airblade/vim-gitgutter'
-let g:gitgutter_enabled = 0
-let g:gitgutter_highlight_lines = 1
-nnoremap <leader>gs :GitGutterToggle<CR>
+"Bundle 'airblade/vim-gitgutter'
+"let g:gitgutter_enabled = 0
+"let g:gitgutter_highlight_lines = 1
+"nnoremap <leader>gs :GitGutterToggle<CR>
 
 " edit history, 可以查看回到某个历史状态
 "Bundle 'sjl/gundo.vim'
@@ -843,40 +843,43 @@ nnoremap <leader>gs :GitGutterToggle<CR>
 
 "################### 显示增强 ###################
 
-" 新的airline配置
-Bundle 'bling/vim-airline'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+let g:isUserairline = 0
+if g:isUserairline
+    " 新的airline配置
+    Bundle 'bling/vim-airline'
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+
+    "let g:airline_left_sep = '▶'
+    "let g:airline_left_alt_sep = '❯'
+    "let g:airline_right_sep = '◀'
+    "let g:airline_right_alt_sep = '❮'
+    "let g:airline_symbols.linenr = '¶'
+    "let g:airline_symbols.branch = '⎇'
+
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#show_buffers= 1
+    let g:airline#extensions#tabline#tab_min_count = 2
+    let g:airline#extensions#tabline#buffer_min_count = 2
+    let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+    "let g:airline#extensions#bufferline#enabled = 1
+    let g:airline#extensions#branch#enabled = 1
+    "let g:airline#extensions#syntastic#enabled = 1
+    let g:airline#extensions#tagbar#enabled = 1
+    let g:airline#extensions#whitespace#enabled = 0
+    let g:airline_theme = 'badwolf'
+    let g:airline_theme_patch_func = 'AirlineThemePatch'
+    function! AirlineThemePatch(palette)
+    if g:airline_theme == 'badwolf'
+      for colors in values(a:palette.inactive)
+        let colors[3] = 245
+      endfor
+    endif
+    endfunction
 endif
 
-"let g:airline_left_sep = '▶'
-"let g:airline_left_alt_sep = '❯'
-"let g:airline_right_sep = '◀'
-"let g:airline_right_alt_sep = '❮'
-"let g:airline_symbols.linenr = '¶'
-"let g:airline_symbols.branch = '⎇'
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers= 1
-let g:airline#extensions#tabline#tab_min_count = 2
-let g:airline#extensions#tabline#buffer_min_count = 2
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-let g:airline#extensions#tabline#buffer_nr_show = 1
-"let g:airline#extensions#bufferline#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-"let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_theme = 'badwolf'
-let g:airline_theme_patch_func = 'AirlineThemePatch'
-function! AirlineThemePatch(palette)
-if g:airline_theme == 'badwolf'
-  for colors in values(a:palette.inactive)
-    let colors[3] = 245
-  endfor
-endif
-endfunction
-  
 " 状态栏显示buffer
 "Bundle 'bling/vim-bufferline'
 
@@ -931,12 +934,12 @@ endif
 "################### 显示增强-主题 ###################"
 
 "主题 solarized
-Bundle 'altercation/vim-colors-solarized'
+"Bundle 'altercation/vim-colors-solarized'
 " .bashrc  --> export TERM=xterm-256color
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
+"let g:solarized_contrast="normal"
+"let g:solarized_visibility="normal"
 
 "Bundle 'chriskempson/vim-tomorrow-theme'
 
@@ -947,30 +950,30 @@ let g:solarized_visibility="normal"
 "colorscheme Tomorrow-Night-Eighties
 
 "主题 molokai
-"Bundle 'tomasr/molokai'
-"let g:molokai_original = 1
+Bundle 'tomasr/molokai'
+let g:molokai_original = 1
 
 " theme主题
-set background=dark "light
-colorscheme solarized
+"set background=dark "light
+"colorscheme solarized
 
 "set t_Co=256
 "autocmd InsertEnter * se cul
 
-"colorscheme molokai
+colorscheme molokai
 "colorscheme desert
 "colorscheme ron
 
 "################### 快速导航 ###################
 "目录导航
-Bundle 'scrooloose/nerdtree'
-map <leader>n :NERDTreeToggle<CR>
-let NERDTreeHighlightCursorline=1
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+"Bundle 'scrooloose/nerdtree'
+"map <leader>n :NERDTreeToggle<CR>
+"let NERDTreeHighlightCursorline=1
+"let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 "let NERDTreeDirArrows=0
 "let g:netrw_home='~/bak'
 "close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 
 "for minibufferexpl
 "Bundle 'fholgado/minibufexpl.vim'
@@ -1033,18 +1036,18 @@ let g:tagbar_type_markdown = {
 "Bundle 'Shougo/vimshell.vim'
 "nmap <F12> :VimShell<CR>
 
-if !g:iscywin
-	Bundle 'xianyo/TagHighlight'
-	let g:TagHighlightSettings = { 
-			\'EnableCscope': 1, 
-			\'LanguageDetectionMethods': ['Extension', 'FileType'],
-			\'FileTypeLanguageOverrides': {'tagbar': 'all', 'gitcommit' : 'all'},
-			\}
-
-	nmap <F10> :UpdateTypesFile<CR>
-else
-	nmap <F10> :BuildCscopeDatabase<CR>
-endif
+"if !g:iscywin
+"	Bundle 'xianyo/TagHighlight'
+"	let g:TagHighlightSettings = { 
+"			\'EnableCscope': 1, 
+"			\'LanguageDetectionMethods': ['Extension', 'FileType'],
+"			\'FileTypeLanguageOverrides': {'tagbar': 'all', 'gitcommit' : 'all'},
+"			\}
+"
+"	nmap <F10> :UpdateTypesFile<CR>
+"else
+"	nmap <F10> :BuildCscopeDatabase<CR>
+"endif
 
 "################### 语言相关 ###################
 
@@ -1056,6 +1059,8 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 "markdown to HTML  
 nmap md :!~/.vim/tools/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
+
+Bundle 'mrtazz/DoxygenToolkit.vim'
 
 
 filetype plugin indent on
