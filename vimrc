@@ -969,14 +969,14 @@ colorscheme molokai
 
 "################### 快速导航 ###################
 "目录导航
-"Bundle 'scrooloose/nerdtree'
-"map <leader>n :NERDTreeToggle<CR>
-"let NERDTreeHighlightCursorline=1
-"let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+Bundle 'scrooloose/nerdtree'
+map <leader>n :NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 "let NERDTreeDirArrows=0
 "let g:netrw_home='~/bak'
 "close vim if the only window left open is a NERDTree
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 
 "for minibufferexpl
 "Bundle 'fholgado/minibufexpl.vim'
