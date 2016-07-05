@@ -699,13 +699,20 @@ if g:isUseYouCompleteMe
 endif
 
 " 代码片段快速插入
-Bundle 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Bundle 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"Bundle 'SirVer/ultisnips'
+
+
+"let g:UltiSnipsExpandTrigger = "<tab>"
+"let g:UltiSnipsJumpForwardTrigger = "<tab>"
 " 定义存放代码片段的文件夹 .vim/ultisnips下，使用自定义和默认的，将会的到全局，有冲突的会提示
-let g:UltiSnipsSnippetDirectories=["ultisnips", 'UltiSnips']
+"let g:UltiSnipsSnippetDirectories=["ultisnips", 'UltiSnips']
+
+
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+
+Bundle 'honza/vim-snippets'
 
 
 
